@@ -1,0 +1,47 @@
+.arialFont {
+	font-family: "Arial";
+	font-size: 12pt;
+}
+
+.darkElement {
+	background-color: rgb(64,64,64);
+	color: white;
+}
+
+.emote {
+    width: 32px;
+    height: 32px;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.fill {
+    width: 100%;
+    height: 100%;
+}
+
+.noBulletPoints {
+	list-style-type: none;
+}
+
+.noPadding {
+	padding: 0;
+}
+
+.noMargin {
+	margin: 0;
+}
+
+.mediumPadding {
+    padding: 8px;
+}
+
+ul {
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    padding: 0;
+    margin: 0 0 16px 0;
+}

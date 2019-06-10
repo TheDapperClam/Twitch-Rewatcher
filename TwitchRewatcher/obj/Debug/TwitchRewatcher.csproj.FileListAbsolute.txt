@@ -1,0 +1,91 @@
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\TwitchRewatcher\TwitchRewatcher\bin\Debug\TwitchRewatcher.exe.config
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\TwitchRewatcher\TwitchRewatcher\bin\Debug\TwitchRewatcher.exe
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\TwitchRewatcher\TwitchRewatcher\bin\Debug\TwitchRewatcher.pdb
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\TwitchRewatcher\TwitchRewatcher\bin\Debug\Interop.WMPLib.dll
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\TwitchRewatcher\TwitchRewatcher\bin\Debug\AxInterop.WMPLib.dll
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\TwitchRewatcher\TwitchRewatcher\obj\Debug\TwitchRewatcher.csprojAssemblyReference.cache
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\TwitchRewatcher\TwitchRewatcher\obj\Debug\Interop.WMPLib.dll
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\TwitchRewatcher\TwitchRewatcher\obj\Debug\AxInterop.WMPLib.dll
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\TwitchRewatcher\TwitchRewatcher\obj\Debug\TwitchRewatcher.csproj.ResolveComReference.cache
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\TwitchRewatcher\TwitchRewatcher\obj\Debug\TwitchRewatcher.Properties.Resources.resources
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\TwitchRewatcher\TwitchRewatcher\obj\Debug\TwitchRewatcher.csproj.GenerateResource.cache
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\TwitchRewatcher\TwitchRewatcher\obj\Debug\TwitchRewatcher.csproj.CoreCompileInputs.cache
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\TwitchRewatcher\TwitchRewatcher\obj\Debug\TwitchRewatcher.exe
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\TwitchRewatcher\TwitchRewatcher\obj\Debug\TwitchRewatcher.pdb
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\TwitchRewatcher\TwitchRewatcher\obj\Debug\TwitchRewatcher.TwitchRewatcherForm.resources
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\TwitchRewatcher\TwitchRewatcher\bin\Debug\Newtonsoft.Json.dll
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\TwitchRewatcher\TwitchRewatcher\bin\Debug\Newtonsoft.Json.pdb
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\TwitchRewatcher\TwitchRewatcher\bin\Debug\Newtonsoft.Json.xml
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\TwitchRewatcher\TwitchRewatcher\obj\Debug\TwitchRewatcher.csproj.CopyComplete
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\TwitchRewatcher\TwitchRewatcher\bin\Debug\Web\chat.htm
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\TwitchRewatcher\TwitchRewatcher\bin\Debug\Web\main.css
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\TwitchRewatcher\TwitchRewatcher\bin\Debug\Tools\RechatTool\LICENSE.txt
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\TwitchRewatcher\TwitchRewatcher\bin\Debug\Tools\RechatTool\Newtonsoft.Json.dll
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\TwitchRewatcher\TwitchRewatcher\bin\Debug\Tools\RechatTool\RechatTool.exe
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\TwitchRewatcher\TwitchRewatcher\bin\Debug\Tools\Youtube-DL\youtube-dl.exe
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\TwitchRewatcher\TwitchRewatcher\bin\Debug\Tools\RechatTool\RechatTool.exe.config
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\TwitchRewatcher\TwitchRewatcher\obj\Debug\TwitchRewatcher.DownloadForm.resources
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\C#\TwitchRewatcher\TwitchRewatcher\bin\Debug\Tools\RechatTool\LICENSE.txt
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\C#\TwitchRewatcher\TwitchRewatcher\bin\Debug\Tools\RechatTool\Newtonsoft.Json.dll
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\C#\TwitchRewatcher\TwitchRewatcher\bin\Debug\Tools\RechatTool\RechatTool.exe
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\C#\TwitchRewatcher\TwitchRewatcher\bin\Debug\Tools\Youtube-DL\youtube-dl.exe
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\C#\TwitchRewatcher\TwitchRewatcher\bin\Debug\Tools\RechatTool\RechatTool.exe.config
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\C#\TwitchRewatcher\TwitchRewatcher\bin\Debug\Web\chat.htm
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\C#\TwitchRewatcher\TwitchRewatcher\bin\Debug\Web\main.css
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\C#\TwitchRewatcher\TwitchRewatcher\bin\Debug\TwitchRewatcher.exe.config
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\C#\TwitchRewatcher\TwitchRewatcher\bin\Debug\TwitchRewatcher.exe
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\C#\TwitchRewatcher\TwitchRewatcher\bin\Debug\TwitchRewatcher.pdb
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\C#\TwitchRewatcher\TwitchRewatcher\bin\Debug\Newtonsoft.Json.dll
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\C#\TwitchRewatcher\TwitchRewatcher\bin\Debug\Newtonsoft.Json.pdb
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\C#\TwitchRewatcher\TwitchRewatcher\bin\Debug\Newtonsoft.Json.xml
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\C#\TwitchRewatcher\TwitchRewatcher\bin\Debug\Interop.WMPLib.dll
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\C#\TwitchRewatcher\TwitchRewatcher\bin\Debug\AxInterop.WMPLib.dll
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\C#\TwitchRewatcher\TwitchRewatcher\obj\Debug\TwitchRewatcher.csprojAssemblyReference.cache
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\C#\TwitchRewatcher\TwitchRewatcher\obj\Debug\Interop.WMPLib.dll
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\C#\TwitchRewatcher\TwitchRewatcher\obj\Debug\AxInterop.WMPLib.dll
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\C#\TwitchRewatcher\TwitchRewatcher\obj\Debug\TwitchRewatcher.csproj.ResolveComReference.cache
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\C#\TwitchRewatcher\TwitchRewatcher\obj\Debug\TwitchRewatcher.TwitchRewatcherForm.resources
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\C#\TwitchRewatcher\TwitchRewatcher\obj\Debug\TwitchRewatcher.Properties.Resources.resources
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\C#\TwitchRewatcher\TwitchRewatcher\obj\Debug\TwitchRewatcher.csproj.GenerateResource.cache
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\C#\TwitchRewatcher\TwitchRewatcher\obj\Debug\TwitchRewatcher.csproj.CoreCompileInputs.cache
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\C#\TwitchRewatcher\TwitchRewatcher\obj\Debug\TwitchRewatcher.csproj.CopyComplete
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\C#\TwitchRewatcher\TwitchRewatcher\obj\Debug\TwitchRewatcher.exe
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\C#\TwitchRewatcher\TwitchRewatcher\obj\Debug\TwitchRewatcher.pdb
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\C#\TwitchRewatcher\TwitchRewatcher\obj\Debug\TwitchRewatcher.DownloadVodForm.resources
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\C#\TwitchRewatcher\TwitchRewatcher\bin\Debug\Microsoft.WindowsAPICodePack.dll
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\C#\TwitchRewatcher\TwitchRewatcher\bin\Debug\Microsoft.WindowsAPICodePack.Shell.dll
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\C#\TwitchRewatcher\TwitchRewatcher\bin\Debug\Microsoft.WindowsAPICodePack.xml
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\C#\TwitchRewatcher\TwitchRewatcher\bin\Debug\Microsoft.WindowsAPICodePack.Shell.xml
+D:\TheDapperClam\Documents\Visual Studio 2017\Projects\C#\TwitchRewatcher\TwitchRewatcher\obj\Debug\TwitchRewatcher.AboutForm.resources
+D:\TheDapperClam\Documents\GitHub\Twitch-Rewatcher\TwitchRewatcher\bin\Debug\Tools\RechatTool\LICENSE.txt
+D:\TheDapperClam\Documents\GitHub\Twitch-Rewatcher\TwitchRewatcher\bin\Debug\Tools\RechatTool\Newtonsoft.Json.dll
+D:\TheDapperClam\Documents\GitHub\Twitch-Rewatcher\TwitchRewatcher\bin\Debug\Tools\RechatTool\RechatTool.exe
+D:\TheDapperClam\Documents\GitHub\Twitch-Rewatcher\TwitchRewatcher\bin\Debug\Tools\Youtube-DL\youtube-dl.exe
+D:\TheDapperClam\Documents\GitHub\Twitch-Rewatcher\TwitchRewatcher\bin\Debug\Tools\RechatTool\RechatTool.exe.config
+D:\TheDapperClam\Documents\GitHub\Twitch-Rewatcher\TwitchRewatcher\bin\Debug\Web\chat.htm
+D:\TheDapperClam\Documents\GitHub\Twitch-Rewatcher\TwitchRewatcher\bin\Debug\Web\main.css
+D:\TheDapperClam\Documents\GitHub\Twitch-Rewatcher\TwitchRewatcher\bin\Debug\TwitchRewatcher.exe.config
+D:\TheDapperClam\Documents\GitHub\Twitch-Rewatcher\TwitchRewatcher\bin\Debug\TwitchRewatcher.exe
+D:\TheDapperClam\Documents\GitHub\Twitch-Rewatcher\TwitchRewatcher\bin\Debug\TwitchRewatcher.pdb
+D:\TheDapperClam\Documents\GitHub\Twitch-Rewatcher\TwitchRewatcher\bin\Debug\Microsoft.WindowsAPICodePack.dll
+D:\TheDapperClam\Documents\GitHub\Twitch-Rewatcher\TwitchRewatcher\bin\Debug\Microsoft.WindowsAPICodePack.Shell.dll
+D:\TheDapperClam\Documents\GitHub\Twitch-Rewatcher\TwitchRewatcher\bin\Debug\Newtonsoft.Json.dll
+D:\TheDapperClam\Documents\GitHub\Twitch-Rewatcher\TwitchRewatcher\bin\Debug\Microsoft.WindowsAPICodePack.xml
+D:\TheDapperClam\Documents\GitHub\Twitch-Rewatcher\TwitchRewatcher\bin\Debug\Microsoft.WindowsAPICodePack.Shell.xml
+D:\TheDapperClam\Documents\GitHub\Twitch-Rewatcher\TwitchRewatcher\bin\Debug\Newtonsoft.Json.pdb
+D:\TheDapperClam\Documents\GitHub\Twitch-Rewatcher\TwitchRewatcher\bin\Debug\Newtonsoft.Json.xml
+D:\TheDapperClam\Documents\GitHub\Twitch-Rewatcher\TwitchRewatcher\bin\Debug\Interop.WMPLib.dll
+D:\TheDapperClam\Documents\GitHub\Twitch-Rewatcher\TwitchRewatcher\bin\Debug\AxInterop.WMPLib.dll
+D:\TheDapperClam\Documents\GitHub\Twitch-Rewatcher\TwitchRewatcher\obj\Debug\TwitchRewatcher.csprojAssemblyReference.cache
+D:\TheDapperClam\Documents\GitHub\Twitch-Rewatcher\TwitchRewatcher\obj\Debug\Interop.WMPLib.dll
+D:\TheDapperClam\Documents\GitHub\Twitch-Rewatcher\TwitchRewatcher\obj\Debug\AxInterop.WMPLib.dll
+D:\TheDapperClam\Documents\GitHub\Twitch-Rewatcher\TwitchRewatcher\obj\Debug\TwitchRewatcher.csproj.ResolveComReference.cache
+D:\TheDapperClam\Documents\GitHub\Twitch-Rewatcher\TwitchRewatcher\obj\Debug\TwitchRewatcher.DownloadVodForm.resources
+D:\TheDapperClam\Documents\GitHub\Twitch-Rewatcher\TwitchRewatcher\obj\Debug\TwitchRewatcher.TwitchRewatcherForm.resources
+D:\TheDapperClam\Documents\GitHub\Twitch-Rewatcher\TwitchRewatcher\obj\Debug\TwitchRewatcher.AboutForm.resources
+D:\TheDapperClam\Documents\GitHub\Twitch-Rewatcher\TwitchRewatcher\obj\Debug\TwitchRewatcher.Properties.Resources.resources
+D:\TheDapperClam\Documents\GitHub\Twitch-Rewatcher\TwitchRewatcher\obj\Debug\TwitchRewatcher.csproj.GenerateResource.cache
+D:\TheDapperClam\Documents\GitHub\Twitch-Rewatcher\TwitchRewatcher\obj\Debug\TwitchRewatcher.csproj.CoreCompileInputs.cache
+D:\TheDapperClam\Documents\GitHub\Twitch-Rewatcher\TwitchRewatcher\obj\Debug\TwitchRewatcher.csproj.CopyComplete
+D:\TheDapperClam\Documents\GitHub\Twitch-Rewatcher\TwitchRewatcher\obj\Debug\TwitchRewatcher.exe
+D:\TheDapperClam\Documents\GitHub\Twitch-Rewatcher\TwitchRewatcher\obj\Debug\TwitchRewatcher.pdb
