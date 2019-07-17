@@ -1,6 +1,3 @@
 os: windows
 language: csharp
-mono:
-	- latest
-	- 4.7.1
 solution: BF Interpreter.sln
