@@ -29,3 +29,4 @@ D:\TheDapperClam\Documents\GitHub\Twitch-Rewatcher\TwitchRewatcher\obj\Release\T
 D:\TheDapperClam\Documents\GitHub\Twitch-Rewatcher\TwitchRewatcher\obj\Release\TwitchRewatcher.csproj.CopyComplete
 D:\TheDapperClam\Documents\GitHub\Twitch-Rewatcher\TwitchRewatcher\obj\Release\TwitchRewatcher.exe
 D:\TheDapperClam\Documents\GitHub\Twitch-Rewatcher\TwitchRewatcher\obj\Release\TwitchRewatcher.pdb
+D:\TheDapperClam\Documents\GitHub\Twitch-Rewatcher\TwitchRewatcher\obj\Release\TwitchRewatcher.csprojAssemblyReference.cache
