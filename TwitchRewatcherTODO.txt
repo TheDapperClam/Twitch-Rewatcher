@@ -4,5 +4,11 @@
 - Add option to remove download from queue.
 - Add ability to modify queued downloads before downloading.
 - Add ability to auto download new streams.
-- Minimize to tray on close instead of closing application.
-- Add emote support.
+- Add BTTV emote support.
+- Add FFZ emote support.
+- Add button to hide left side control panel
+- Add button to hide chat
+- Add option to download chat only
+- Add option to download vido only
+- Add option to watch chat only
+- Add option to watch video only

@@ -4,13 +4,11 @@
 }
 
 .darkElement {
-	background-color: rgb(64,64,64);
+	background-color: rgb(32,32,32);
 	color: white;
 }
 
 .emote {
-    width: 32px;
-    height: 32px;
     vertical-align: middle;
     text-align: center;
 }

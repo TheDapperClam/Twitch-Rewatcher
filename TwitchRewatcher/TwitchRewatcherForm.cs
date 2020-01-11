@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -16,12 +17,14 @@ namespace TwitchRewatcher
 {
     public partial class TwitchRewatcherForm : Form
     {
-        private const double PLAYBACK_TIME_TRAVEL_AMOUNT = 60;
+        private const double PLAYBACK_TIME_TRAVEL_AMOUNT = 10;
         private readonly string CHAT_HTML_LOCATION_String = Directory.GetCurrentDirectory () + "\\Web\\chat.htm";
         private ChatObject[] chatMessages;
         private int chatIndex;
         private HtmlDocument chatDocument;
         private HtmlElement chatList;
+
+        private bool minimizeOnClose = true;
 
         private StreamConfig currentStreamConfig;
         private string currentVideoPath;
@@ -32,18 +35,14 @@ namespace TwitchRewatcher
 
         private DownloadVodForm downloadForm = new DownloadVodForm ();
 
-        private void AddChatMessage ( ChatObject message ) {
-            if ( message == null )
+        private void AddChatObject ( ChatObject obj ) {
+            if ( obj == null )
                 return;
 
             if ( !IsChatHtmlLoaded () )
                 return;
 
-            string userColor = message.Message.Color;
-            string userName = message.Commenter.DisplayName;
-            string userMessage = message.Message.Body;
-            string formattedMessage = string.Format ( "<li><span style='color:{0}'><b>{1}</b></span>: {2}</li>", userColor, userName, userMessage );
-            chatList.InnerHtml += formattedMessage;
+            chatList.InnerHtml += obj.GetFormattedMessage ();
             chatDocument.Window.ScrollTo ( 0, chatDocument.Body.ScrollRectangle.Height );
         }
         private void ClearChat () {
@@ -107,6 +106,16 @@ namespace TwitchRewatcher
             currentVideoPath = path;
             videoPlayer.URL = path;
             SetPlaybackTime ( 0 );
+        }
+
+        private void MinimizeToTray () {
+            Hide ();
+        }
+
+        private void RemoveFromTray () {
+            Show ();
+            BringToFront ();
+            SetPauseState ( false );
         }
 
         private void ResetChat () {
@@ -182,7 +191,7 @@ namespace TwitchRewatcher
             if ( GetPlaybackTime () < newMessage.PostTime )
                 return;
 
-            AddChatMessage ( newMessage );
+            AddChatObject ( newMessage );
             chatIndex++;
         }
 
@@ -203,6 +212,9 @@ namespace TwitchRewatcher
         }
 
         private void playButton_Click( object sender, EventArgs e ) {
+            if ( videoPlayer.Ctlcontrols.currentPosition == 0.0f )
+                ResetChat ();
+
             SetPauseState ( IsPlaying () );
         }
 
@@ -247,6 +259,8 @@ namespace TwitchRewatcher
         }
 
         private void TwitchRewatcherForm_Load( object sender, EventArgs e ) {
+            playbackTimeTrackBar.MouseWheel += (a, b) => ( (HandledMouseEventArgs) b ).Handled = true;
+            volumeTrackBar.Value = videoPlayer.settings.volume;
             LoadChatPage ();
         }
 
@@ -255,6 +269,12 @@ namespace TwitchRewatcher
         }
 
         private void TwitchRewatcherForm_FormClosing( object sender, FormClosingEventArgs e ) {
+            if ( minimizeOnClose ) {
+                e.Cancel = true;
+                MinimizeToTray ();
+                return;
+            }
+
             SaveCurrentConfig ();
 
             if ( VodDownloader.IsDownloadingChat || VodDownloader.IsDownloadingVideo ) {
@@ -265,11 +285,14 @@ namespace TwitchRewatcher
 
                 if ( r == DialogResult.No ) {
                     e.Cancel = true;
+                    minimizeOnClose = true;
                     return;
                 }
             }
 
             VodDownloader.KillDownloads ();
+            notifyIcon.Visible = false;
+            notifyIcon.Dispose ();
         }
 
         private void downloadVodButton_Click ( object sender, EventArgs e ) {
@@ -326,6 +349,27 @@ namespace TwitchRewatcher
         private void aboutButton_Click ( object sender, EventArgs e ) {
             AboutForm form = new AboutForm ();
             form.ShowDialog ();
+        }
+
+        private void notifyIcon_MouseDoubleClick ( object sender, MouseEventArgs e ) {
+            RemoveFromTray ();
+        }
+
+        private void exitToolStripMenuItem_Click ( object sender, EventArgs e ) {
+            minimizeOnClose = false;
+            this.Close ();
+        }
+
+        private void showToolStripMenuItem_Click ( object sender, EventArgs e ) {
+            RemoveFromTray ();
+        }
+
+        private void notifyIcon_MouseMove ( object sender, MouseEventArgs e ) {
+            notifyIcon.Text = "Twitch Rewatcher" + ( VodDownloader.IsDownloading ? " " + Math.Floor ( VodDownloader.TotalDownloadProgress () ) + "%" : "" );
+        }
+
+        private void volumeTrackBar_Scroll ( object sender, EventArgs e ) {
+            videoPlayer.settings.volume = volumeTrackBar.Value;
         }
     }
 }

@@ -13,6 +13,7 @@ namespace TwitchRewatcher
 
         public static float VideoDownloadProgress { get; private set; }
         public static float ChatDownloadProgress { get; private set; }
+        public static bool IsDownloading { get { return IsDownloadingVideo || IsDownloadingChat; } }
         public static bool IsDownloadingVideo { get { return youtubeDlProcess != null; } }
         public static bool IsDownloadingChat { get { return reChatToolProcess != null; } }
 
@@ -42,10 +43,7 @@ namespace TwitchRewatcher
         }
 
         private static void CheckDownloadFinished () {
-            if ( IsDownloadingChat )
-                return;
-
-            if ( IsDownloadingVideo )
+            if ( IsDownloading )
                 return;
 
             VideoDownloadProgress = 0.0f;
@@ -75,7 +73,8 @@ namespace TwitchRewatcher
             rechatToolInfo.UseShellExecute = false;
             youtubeDlInfo.RedirectStandardOutput = true;
             rechatToolInfo.RedirectStandardOutput = true;
-            youtubeDlInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            youtubeDlInfo.CreateNoWindow = true;
+            rechatToolInfo.CreateNoWindow = true;
             rechatToolInfo.WindowStyle = ProcessWindowStyle.Hidden;
             youtubeDlInfo.Arguments = string.Format ( "--newline -o \"{0}\\{1}.%(ext)s\" \"{2}\"", o, title, source );
             rechatToolInfo.Arguments = string.Format ( "-d {0} \"{1}\"", id, o + title + ".dtc" );
@@ -118,10 +117,7 @@ namespace TwitchRewatcher
                 reChatToolProcess.Kill ();
 
             while ( !downloadFinished && Directory.Exists ( currentDirectory ) ) {
-                if ( IsDownloadingVideo )
-                    continue;
-
-                if ( IsDownloadingChat )
+                if ( IsDownloading )
                     continue;
 
                 try {

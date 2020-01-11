@@ -25,6 +25,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent () {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DownloadVodForm));
             this.downloadProgressBar = new System.Windows.Forms.ProgressBar();
             this.destinationBrowseButton = new System.Windows.Forms.Button();
             this.destinationTextBox = new System.Windows.Forms.TextBox();
@@ -174,6 +175,7 @@
             this.Controls.Add(this.destinationTextBox);
             this.Controls.Add(this.destinationBrowseButton);
             this.Controls.Add(this.downloadProgressBar);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "DownloadVodForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Download VOD";

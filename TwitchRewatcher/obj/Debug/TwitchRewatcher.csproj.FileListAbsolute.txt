@@ -85,7 +85,6 @@ D:\TheDapperClam\Documents\GitHub\Twitch-Rewatcher\TwitchRewatcher\obj\Debug\Twi
 D:\TheDapperClam\Documents\GitHub\Twitch-Rewatcher\TwitchRewatcher\obj\Debug\TwitchRewatcher.AboutForm.resources
 D:\TheDapperClam\Documents\GitHub\Twitch-Rewatcher\TwitchRewatcher\obj\Debug\TwitchRewatcher.Properties.Resources.resources
 D:\TheDapperClam\Documents\GitHub\Twitch-Rewatcher\TwitchRewatcher\obj\Debug\TwitchRewatcher.csproj.GenerateResource.cache
-D:\TheDapperClam\Documents\GitHub\Twitch-Rewatcher\TwitchRewatcher\obj\Debug\TwitchRewatcher.csproj.CoreCompileInputs.cache
 D:\TheDapperClam\Documents\GitHub\Twitch-Rewatcher\TwitchRewatcher\obj\Debug\TwitchRewatcher.csproj.CopyComplete
 D:\TheDapperClam\Documents\GitHub\Twitch-Rewatcher\TwitchRewatcher\obj\Debug\TwitchRewatcher.exe
 D:\TheDapperClam\Documents\GitHub\Twitch-Rewatcher\TwitchRewatcher\obj\Debug\TwitchRewatcher.pdb

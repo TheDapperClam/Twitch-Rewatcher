@@ -124,7 +124,16 @@
   <data name="SoundButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\SoundButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="DownloadVod" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\DownloadVod.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="OpenStream" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\OpenStream.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="PauseButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\PauseButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="About" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\About.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
