@@ -114,7 +114,24 @@ namespace TwitchRewatcher
         }
 
         private void vodDownloadQueueDataGridView_SelectionChanged ( object sender, EventArgs e ) {
-            vodDownloadQueueDataGridView.ClearSelection ();
+            deleteDownloadButton.Enabled = vodDownloadQueueDataGridView.SelectedRows.Count > 0;
+        }
+
+        private void deleteDownloadButton_Click ( object sender, EventArgs e ) {
+            foreach ( DataGridViewRow row in vodDownloadQueueDataGridView.SelectedRows ) {
+                if ( row.Index == 0 ) {
+                    continue;
+                    /*switch ( MessageBox.Show ( "Would you like to delete the current download?", "Deleting Download", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning ) ) {
+                        case DialogResult.No:
+                            continue;
+                        case DialogResult.Cancel:
+                            return;
+                    }
+                    downloadIndex = -1;
+                    VodDownloader.KillDownloads ();*/
+                }
+                downloadQueue.RemoveAt ( row.Index );
+            }
         }
     }
 }

@@ -37,6 +37,7 @@
             this.downloadProgressLabel = new System.Windows.Forms.Label();
             this.downloadButton = new System.Windows.Forms.Button();
             this.vodDownloadQueueDataGridView = new System.Windows.Forms.DataGridView();
+            this.deleteDownloadButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.vodDownloadQueueDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -153,10 +154,23 @@
             this.vodDownloadQueueDataGridView.Location = new System.Drawing.Point(12, 283);
             this.vodDownloadQueueDataGridView.Name = "vodDownloadQueueDataGridView";
             this.vodDownloadQueueDataGridView.ReadOnly = true;
-            this.vodDownloadQueueDataGridView.Size = new System.Drawing.Size(558, 229);
+            this.vodDownloadQueueDataGridView.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.vodDownloadQueueDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.vodDownloadQueueDataGridView.Size = new System.Drawing.Size(558, 200);
             this.vodDownloadQueueDataGridView.TabIndex = 10;
             this.vodDownloadQueueDataGridView.TabStop = false;
             this.vodDownloadQueueDataGridView.SelectionChanged += new System.EventHandler(this.vodDownloadQueueDataGridView_SelectionChanged);
+            // 
+            // deleteDownloadButton
+            // 
+            this.deleteDownloadButton.Enabled = false;
+            this.deleteDownloadButton.Location = new System.Drawing.Point(12, 489);
+            this.deleteDownloadButton.Name = "deleteDownloadButton";
+            this.deleteDownloadButton.Size = new System.Drawing.Size(75, 23);
+            this.deleteDownloadButton.TabIndex = 11;
+            this.deleteDownloadButton.Text = "Delete";
+            this.deleteDownloadButton.UseVisualStyleBackColor = true;
+            this.deleteDownloadButton.Click += new System.EventHandler(this.deleteDownloadButton_Click);
             // 
             // DownloadVodForm
             // 
@@ -164,6 +178,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.ClientSize = new System.Drawing.Size(582, 524);
+            this.Controls.Add(this.deleteDownloadButton);
             this.Controls.Add(this.vodDownloadQueueDataGridView);
             this.Controls.Add(this.downloadButton);
             this.Controls.Add(this.downloadProgressLabel);
@@ -200,5 +215,6 @@
         private System.Windows.Forms.Label downloadProgressLabel;
         private System.Windows.Forms.Button downloadButton;
         private System.Windows.Forms.DataGridView vodDownloadQueueDataGridView;
+        private System.Windows.Forms.Button deleteDownloadButton;
     }
 }

@@ -3,6 +3,12 @@
 	font-size: 12pt;
 }
 
+body {
+    position: fixed;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
 .darkElement {
 	background-color: rgb(32,32,32);
 	color: white;
@@ -32,11 +38,6 @@
 
 .mediumPadding {
     padding: 8px;
-}
-
-ul {
-    padding: 0;
-    margin: 0;
 }
 
 li {

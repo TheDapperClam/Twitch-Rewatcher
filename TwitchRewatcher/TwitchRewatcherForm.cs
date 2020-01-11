@@ -5,7 +5,6 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -15,14 +14,31 @@ using Newtonsoft.Json;
 
 namespace TwitchRewatcher
 {
-    public partial class TwitchRewatcherForm : Form
+    public enum VideoMode {
+        Normal = 0,
+        Theater,
+    }
+
+    public partial class TwitchRewatcherForm : Form, IMessageFilter
     {
+        public delegate void MouseMovedEvent ();
+        public event MouseMovedEvent GlobalMouseMove;
+
+        private const int WM_MOUSEMOVE = 0x0200;
         private const double PLAYBACK_TIME_TRAVEL_AMOUNT = 10;
         private readonly string CHAT_HTML_LOCATION_String = Directory.GetCurrentDirectory () + "\\Web\\chat.htm";
         private ChatObject[] chatMessages;
         private int chatIndex;
         private HtmlDocument chatDocument;
         private HtmlElement chatList;
+
+        private VideoMode currentVideoMode;
+        private Rectangle oldBounds;
+        private bool isMaximized;
+        private bool optionsPanelVisible = true;
+        private bool chatVisible = true;
+
+        private Point oldCursorPosition;
 
         private bool minimizeOnClose = true;
 
@@ -34,6 +50,22 @@ namespace TwitchRewatcher
         private double startingTime = 0;
 
         private DownloadVodForm downloadForm = new DownloadVodForm ();
+
+        private bool cursorVisible = true;
+        private bool CursorVisible  {
+            get { return cursorVisible; }
+            set {
+                if ( value == cursorVisible )
+                    return;
+
+                if ( value )
+                    Cursor.Show ();
+                else
+                    Cursor.Hide ();
+
+                cursorVisible = value;
+            }
+        }
 
         private void AddChatObject ( ChatObject obj ) {
             if ( obj == null )
@@ -112,6 +144,23 @@ namespace TwitchRewatcher
             Hide ();
         }
 
+        private void OnGlobalMouseMove () {
+            if ( ActiveForm != this )
+                return;
+
+            if ( oldCursorPosition == Cursor.Position )
+                return;
+
+            oldCursorPosition = Cursor.Position;
+            SetMouseMoveControlVisibility ( true );
+        }
+
+        public bool PreFilterMessage ( ref Message m ) {
+            if ( m.Msg == WM_MOUSEMOVE && GlobalMouseMove != null )
+                GlobalMouseMove ();
+            return false;
+        }
+
         private void RemoveFromTray () {
             Show ();
             BringToFront ();
@@ -143,6 +192,17 @@ namespace TwitchRewatcher
             string basePath = Directory.GetParent ( currentVideoPath ).FullName;
             currentStreamConfig.PlaybackTime = GetPlaybackTime ();
             StreamConfigManager.SaveConfig ( basePath, currentStreamConfig );
+        }
+
+        private void SetChatVisibility ( bool visible ) {
+            chatVisible = visible;
+            chatWebBrowser.Visible = chatVisible;
+            toggleChatButton.Text = visible ? ">" : "<";
+        }
+
+        private void SetOptionsPanelVisibility ( bool visible ) {
+            optionsPanelVisible = visible;
+            optionsPanel.Visible = optionsPanelVisible;
         }
 
         private void SetPauseState ( bool paused ) {
@@ -179,6 +239,45 @@ namespace TwitchRewatcher
             playbackTimeTrackBar.Value = value;
         }
 
+        private void SetMouseMoveControlVisibility ( bool visible ) {
+            if ( ActiveForm != this )
+                return;
+
+            controlPanel.Visible = visible;
+            toggleChatButton.Visible = visible;
+            CursorVisible = visible;
+            SetOptionsPanelVisibility ( visible );
+
+            if ( visible ) {
+                hideMouseMoveControlsTimer.Enabled = true;
+                hideMouseMoveControlsTimer.Stop ();
+                hideMouseMoveControlsTimer.Start ();
+            }
+        }
+
+        private void SetVideoMode ( VideoMode mode ) {
+            currentVideoMode = mode;
+            switch ( currentVideoMode ) {
+                case VideoMode.Normal:
+                    FormBorderStyle = FormBorderStyle.Sizable;
+                    WindowState = isMaximized ? FormWindowState.Maximized : FormWindowState.Normal;
+                    Bounds = oldBounds;
+                    TopMost = false;
+                    SetOptionsPanelVisibility ( true );
+                    break;
+                case VideoMode.Theater:
+                    isMaximized = WindowState == FormWindowState.Maximized;
+                    oldBounds = RestoreBounds;
+                    FormBorderStyle = FormBorderStyle.None;
+                    WindowState = FormWindowState.Normal;
+                    Bounds = Screen.FromControl ( this ).Bounds;
+                    TopMost = true;
+                    SetOptionsPanelVisibility ( false );
+                    SetMouseMoveControlVisibility ( false );
+                    break;
+            }
+        }
+
         private void UpdateChatMessages() {
             if ( chatMessages == null )
                 return;
@@ -203,6 +302,8 @@ namespace TwitchRewatcher
 
         public TwitchRewatcherForm() {
             InitializeComponent ();
+            GlobalMouseMove += new MouseMovedEvent ( OnGlobalMouseMove );
+            Application.AddMessageFilter ( this );
         }
 
         private void videoPlayer_PlayStateChange( object sender, AxWMPLib._WMPOCXEvents_PlayStateChangeEvent e ) {
@@ -259,6 +360,7 @@ namespace TwitchRewatcher
         }
 
         private void TwitchRewatcherForm_Load( object sender, EventArgs e ) {
+            oldCursorPosition = Cursor.Position;
             playbackTimeTrackBar.MouseWheel += (a, b) => ( (HandledMouseEventArgs) b ).Handled = true;
             volumeTrackBar.Value = videoPlayer.settings.volume;
             LoadChatPage ();
@@ -299,7 +401,7 @@ namespace TwitchRewatcher
             if ( downloadForm == null )
                 downloadForm = new DownloadVodForm ();
 
-            downloadForm.Show ();
+            downloadForm.ShowDialog ();
         }
 
         private void openStreamButton_Click ( object sender, EventArgs e ) {
@@ -370,6 +472,26 @@ namespace TwitchRewatcher
 
         private void volumeTrackBar_Scroll ( object sender, EventArgs e ) {
             videoPlayer.settings.volume = volumeTrackBar.Value;
+            videoPlayer.settings.mute = false;
+        }
+
+        private void toggleChatButton_Click ( object sender, EventArgs e ) {
+            SetChatVisibility ( !chatVisible );
+        }
+
+        private void hideMouseMoveControlsTimer_Tick ( object sender, EventArgs e ) {
+            SetMouseMoveControlVisibility ( false );
+        }
+
+        private void theaterModeButton_Click ( object sender, EventArgs e ) {
+            if ( currentVideoMode != VideoMode.Theater )
+                SetVideoMode ( VideoMode.Theater );
+            else
+                SetVideoMode ( VideoMode.Normal );
+        }
+
+        private void soundButton_Click ( object sender, EventArgs e ) {
+            videoPlayer.settings.mute = !videoPlayer.settings.mute;
         }
     }
 }
