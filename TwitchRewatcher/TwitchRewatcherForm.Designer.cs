@@ -48,8 +48,8 @@
             this.toggleChatButton = new System.Windows.Forms.Button();
             this.volumeTrackBar = new System.Windows.Forms.TrackBar();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.theaterModeButton = new System.Windows.Forms.Button();
             this.controlPanel = new System.Windows.Forms.Panel();
+            this.theaterModeButton = new System.Windows.Forms.Button();
             this.hideMouseMoveControlsTimer = new System.Windows.Forms.Timer(this.components);
             this.optionsPanel.SuspendLayout();
             this.notifyIconContextMenuStrip.SuspendLayout();
@@ -191,11 +191,13 @@
             this.playbackTimeTrackBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.playbackTimeTrackBar.AutoSize = false;
-            this.playbackTimeTrackBar.Location = new System.Drawing.Point(3, 26);
+            this.playbackTimeTrackBar.Location = new System.Drawing.Point(3, 23);
+            this.playbackTimeTrackBar.Maximum = 0;
             this.playbackTimeTrackBar.Name = "playbackTimeTrackBar";
             this.playbackTimeTrackBar.Size = new System.Drawing.Size(650, 22);
             this.playbackTimeTrackBar.TabIndex = 5;
             this.playbackTimeTrackBar.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.twitchRewatcherToolTip.SetToolTip(this.playbackTimeTrackBar, "Stream Position");
             this.playbackTimeTrackBar.Scroll += new System.EventHandler(this.playbackTimeTrackBar_Scroll);
             this.playbackTimeTrackBar.MouseDown += new System.Windows.Forms.MouseEventHandler(this.playbackTimeTrackBar_MouseDown);
             this.playbackTimeTrackBar.MouseUp += new System.Windows.Forms.MouseEventHandler(this.playbackTimeTrackBar_MouseUp);
@@ -211,10 +213,11 @@
             this.playButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
             this.playButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.playButton.ForeColor = System.Drawing.Color.White;
-            this.playButton.Location = new System.Drawing.Point(3, 52);
+            this.playButton.Location = new System.Drawing.Point(6, 44);
             this.playButton.Name = "playButton";
-            this.playButton.Size = new System.Drawing.Size(24, 24);
+            this.playButton.Size = new System.Drawing.Size(32, 32);
             this.playButton.TabIndex = 4;
+            this.twitchRewatcherToolTip.SetToolTip(this.playButton, "Toggle Play State");
             this.playButton.UseVisualStyleBackColor = false;
             this.playButton.Click += new System.EventHandler(this.playButton_Click);
             // 
@@ -269,10 +272,11 @@
             this.soundButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
             this.soundButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.soundButton.ForeColor = System.Drawing.Color.White;
-            this.soundButton.Location = new System.Drawing.Point(33, 52);
+            this.soundButton.Location = new System.Drawing.Point(44, 44);
             this.soundButton.Name = "soundButton";
-            this.soundButton.Size = new System.Drawing.Size(24, 24);
+            this.soundButton.Size = new System.Drawing.Size(32, 32);
             this.soundButton.TabIndex = 7;
+            this.twitchRewatcherToolTip.SetToolTip(this.soundButton, "Toggle Mute");
             this.soundButton.UseVisualStyleBackColor = false;
             this.soundButton.Click += new System.EventHandler(this.soundButton_Click);
             // 
@@ -295,12 +299,13 @@
             // volumeTrackBar
             // 
             this.volumeTrackBar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.volumeTrackBar.Location = new System.Drawing.Point(57, 54);
+            this.volumeTrackBar.Location = new System.Drawing.Point(76, 50);
             this.volumeTrackBar.Maximum = 100;
             this.volumeTrackBar.Name = "volumeTrackBar";
             this.volumeTrackBar.Size = new System.Drawing.Size(104, 45);
             this.volumeTrackBar.TabIndex = 8;
             this.volumeTrackBar.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.twitchRewatcherToolTip.SetToolTip(this.volumeTrackBar, "Volume");
             this.volumeTrackBar.Scroll += new System.EventHandler(this.volumeTrackBar_Scroll);
             // 
             // panel1
@@ -314,23 +319,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(662, 572);
             this.panel1.TabIndex = 6;
-            // 
-            // theaterModeButton
-            // 
-            this.theaterModeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.theaterModeButton.BackColor = System.Drawing.Color.Transparent;
-            this.theaterModeButton.FlatAppearance.BorderSize = 0;
-            this.theaterModeButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.theaterModeButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
-            this.theaterModeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.theaterModeButton.ForeColor = System.Drawing.Color.White;
-            this.theaterModeButton.Location = new System.Drawing.Point(585, 53);
-            this.theaterModeButton.Name = "theaterModeButton";
-            this.theaterModeButton.Size = new System.Drawing.Size(75, 23);
-            this.theaterModeButton.TabIndex = 9;
-            this.theaterModeButton.Text = "Theater";
-            this.theaterModeButton.UseVisualStyleBackColor = false;
-            this.theaterModeButton.Click += new System.EventHandler(this.theaterModeButton_Click);
             // 
             // controlPanel
             // 
@@ -347,6 +335,26 @@
             this.controlPanel.Name = "controlPanel";
             this.controlPanel.Size = new System.Drawing.Size(662, 79);
             this.controlPanel.TabIndex = 7;
+            // 
+            // theaterModeButton
+            // 
+            this.theaterModeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.theaterModeButton.BackColor = System.Drawing.Color.Transparent;
+            this.theaterModeButton.BackgroundImage = global::TwitchRewatcher.Properties.Resources.TheaterModeButton;
+            this.theaterModeButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.theaterModeButton.FlatAppearance.BorderSize = 0;
+            this.theaterModeButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.theaterModeButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
+            this.theaterModeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.theaterModeButton.ForeColor = System.Drawing.Color.White;
+            this.theaterModeButton.Location = new System.Drawing.Point(624, 44);
+            this.theaterModeButton.Name = "theaterModeButton";
+            this.theaterModeButton.Size = new System.Drawing.Size(32, 32);
+            this.theaterModeButton.TabIndex = 9;
+            this.theaterModeButton.Text = "Theater";
+            this.twitchRewatcherToolTip.SetToolTip(this.theaterModeButton, "Toggle Theater Mode");
+            this.theaterModeButton.UseVisualStyleBackColor = false;
+            this.theaterModeButton.Click += new System.EventHandler(this.theaterModeButton_Click);
             // 
             // hideMouseMoveControlsTimer
             // 

@@ -119,3 +119,4 @@ D:\TheDapperClam\Documents\Dev\Projects\C#\Twitch-Rewatcher\TwitchRewatcher\obj\
 D:\TheDapperClam\Documents\Dev\Projects\C#\Twitch-Rewatcher\TwitchRewatcher\obj\Debug\TwitchRewatcher.csproj.CopyComplete
 D:\TheDapperClam\Documents\Dev\Projects\C#\Twitch-Rewatcher\TwitchRewatcher\obj\Debug\TwitchRewatcher.exe
 D:\TheDapperClam\Documents\Dev\Projects\C#\Twitch-Rewatcher\TwitchRewatcher\obj\Debug\TwitchRewatcher.pdb
+D:\TheDapperClam\Documents\Dev\Projects\C#\Twitch-Rewatcher\TwitchRewatcher\obj\Debug\TwitchRewatcher.LoadingForm.resources

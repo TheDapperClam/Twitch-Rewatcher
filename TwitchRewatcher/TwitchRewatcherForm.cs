@@ -200,6 +200,14 @@ namespace TwitchRewatcher
             toggleChatButton.Text = visible ? ">" : "<";
         }
 
+        private void SetMuteState ( bool muted ) {
+            if ( !IsVideoLoaded () )
+                return;
+
+            videoPlayer.settings.mute = muted;
+            soundButton.BackgroundImage = muted ? Properties.Resources.SoundButtonMute : Properties.Resources.SoundButton;
+        }
+
         private void SetOptionsPanelVisibility ( bool visible ) {
             optionsPanelVisible = visible;
             optionsPanel.Visible = optionsPanelVisible;
@@ -240,7 +248,10 @@ namespace TwitchRewatcher
         }
 
         private void SetMouseMoveControlVisibility ( bool visible ) {
-            if ( ActiveForm != this )
+            if ( !visible && ActiveForm != this )
+                return;
+
+            if ( !visible && !IsPlaying () )
                 return;
 
             controlPanel.Visible = visible;
@@ -263,7 +274,6 @@ namespace TwitchRewatcher
                     WindowState = isMaximized ? FormWindowState.Maximized : FormWindowState.Normal;
                     Bounds = oldBounds;
                     TopMost = false;
-                    SetOptionsPanelVisibility ( true );
                     break;
                 case VideoMode.Theater:
                     isMaximized = WindowState == FormWindowState.Maximized;
@@ -272,7 +282,6 @@ namespace TwitchRewatcher
                     WindowState = FormWindowState.Normal;
                     Bounds = Screen.FromControl ( this ).Bounds;
                     TopMost = true;
-                    SetOptionsPanelVisibility ( false );
                     SetMouseMoveControlVisibility ( false );
                     break;
             }
@@ -307,9 +316,7 @@ namespace TwitchRewatcher
         }
 
         private void videoPlayer_PlayStateChange( object sender, AxWMPLib._WMPOCXEvents_PlayStateChangeEvent e ) {
-            Image playButtonIcon = IsPlaying () ? Properties.Resources.PauseButton : Properties.Resources.PlayButton;
-
-            playButton.BackgroundImage = playButtonIcon;
+            playButton.BackgroundImage = IsPlaying () ? Properties.Resources.PauseButton : Properties.Resources.PlayButton;
         }
 
         private void playButton_Click( object sender, EventArgs e ) {
@@ -394,7 +401,7 @@ namespace TwitchRewatcher
 
             VodDownloader.KillDownloads ();
             notifyIcon.Visible = false;
-            notifyIcon.Dispose ();
+            Program.Close ();
         }
 
         private void downloadVodButton_Click ( object sender, EventArgs e ) {
@@ -449,8 +456,9 @@ namespace TwitchRewatcher
         }
 
         private void aboutButton_Click ( object sender, EventArgs e ) {
-            AboutForm form = new AboutForm ();
-            form.ShowDialog ();
+            using ( AboutForm form = new AboutForm () ) {
+                form.ShowDialog ();
+            }
         }
 
         private void notifyIcon_MouseDoubleClick ( object sender, MouseEventArgs e ) {
@@ -472,7 +480,7 @@ namespace TwitchRewatcher
 
         private void volumeTrackBar_Scroll ( object sender, EventArgs e ) {
             videoPlayer.settings.volume = volumeTrackBar.Value;
-            videoPlayer.settings.mute = false;
+            SetMuteState ( false );
         }
 
         private void toggleChatButton_Click ( object sender, EventArgs e ) {
@@ -491,7 +499,7 @@ namespace TwitchRewatcher
         }
 
         private void soundButton_Click ( object sender, EventArgs e ) {
-            videoPlayer.settings.mute = !videoPlayer.settings.mute;
+            SetMuteState ( !videoPlayer.settings.mute );
         }
     }
 }

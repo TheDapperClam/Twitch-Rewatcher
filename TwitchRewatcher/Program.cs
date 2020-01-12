@@ -6,16 +6,25 @@ using System.Windows.Forms;
 
 namespace TwitchRewatcher
 {
-    static class Program
+    public static class Program
     {
+        private static LoadingForm form;
+
+        public static void Close () {
+            if ( form == null )
+                return;
+
+            form.Close ();
+        }
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main() {
+        private static void Main() {
             Application.EnableVisualStyles ();
             Application.SetCompatibleTextRenderingDefault ( false );
-            Application.Run ( new TwitchRewatcherForm () );
+            Application.Run ( ( form = new LoadingForm () ) );
         }
     }
 }

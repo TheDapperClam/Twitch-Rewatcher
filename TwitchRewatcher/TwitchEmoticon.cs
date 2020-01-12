@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
 
 namespace TwitchRewatcher {
-    public class Emoticon {
-        public const string URL_TEMPLATE = "https://static-cdn.jtvnw.net/emoticons/v1/{0}/1.0";
+    public class TwitchEmoticon {
+        private const string URL_TEMPLATE = "https://static-cdn.jtvnw.net/emoticons/v1/{0}/1.0";
 
         [JsonProperty ( "_id" )]
         public string ID { get; set; }

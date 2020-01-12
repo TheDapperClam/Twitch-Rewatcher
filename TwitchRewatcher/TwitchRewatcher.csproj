@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{7C5C1DC6-7EDA-4021-9DBA-E371205CB66C}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>TwitchRewatcher</RootNamespace>
     <AssemblyName>TwitchRewatcher</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
@@ -59,6 +59,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BTTVEmoticon.cs" />
+    <Compile Include="BTTVEmoticonCollection.cs" />
+    <Compile Include="BTTVEmoticonLoader.cs" />
     <Compile Include="ChatCommenter.cs" />
     <Compile Include="ChatLoader.cs" />
     <Compile Include="ChatMessage.cs" />
@@ -69,7 +72,13 @@
     <Compile Include="DownloadVodForm.Designer.cs">
       <DependentUpon>DownloadVodForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Emoticon.cs" />
+    <Compile Include="LoadingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LoadingForm.Designer.cs">
+      <DependentUpon>LoadingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TwitchEmoticon.cs" />
     <Compile Include="TwitchRewatcherForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -90,6 +99,9 @@
     <Compile Include="VodDownloader.cs" />
     <EmbeddedResource Include="DownloadVodForm.resx">
       <DependentUpon>DownloadVodForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LoadingForm.resx">
+      <DependentUpon>LoadingForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TwitchRewatcherForm.resx">
       <DependentUpon>TwitchRewatcherForm.cs</DependentUpon>
@@ -156,7 +168,11 @@
     <None Include="Images\DownloadVod.png" />
     <None Include="Images\OpenStream.png" />
     <None Include="Images\About.png" />
+    <None Include="Images\SoundButtonMute.png" />
+    <None Include="Images\TheaterModeButton.png" />
+    <Content Include="Images\twitchrewatchericon.png" />
     <Content Include="Images\twitchrewatchericon_jfI_icon.ico" />
+    <None Include="Resources\SoundButtonMute.png" />
     <Content Include="Tools\RechatTool\LICENSE.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
