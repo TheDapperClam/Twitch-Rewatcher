@@ -1,32 +1,41 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
 
 namespace TwitchRewatcher {
     public static class BTTVEmoticonLoader {
-        public delegate void BTTVEmoticonEventHandler ();
+        public delegate void BTTVEmoticonEventHandler ( BTTVEmoticonCollection collection );
         public static event BTTVEmoticonEventHandler OnOfficialEmoticonsLoaded;
+        public static event BTTVEmoticonEventHandler OnChannelEmoticonsLoaded;
 
-        private const string URL = "https://api.betterttv.net/2/emotes";
+        public static BTTVEmoticonCollection OfficialEmoticonCollection { get; private set; }
+        public static BTTVEmoticonCollection ChannelEmoticonCollection { get; private set; }
 
-        [JsonProperty( "emotes" )]
-        public static BTTVEmoticonCollection EmoticonCollection { get; private set; }
+        public static void LoadChannelEmoticons ( TwitchUser channel ) {
+            if ( channel == null )
+                return;
+
+            using ( HttpClient client = new HttpClient () ) {
+                string url = "https://api.betterttv.net/2/channels/{0}";
+                client.BaseAddress = new Uri ( string.Format ( url, channel.Login ) );
+                client.DefaultRequestHeaders.Accept.Add ( new MediaTypeWithQualityHeaderValue ( "application/json" ) );
+                HttpResponseMessage response = client.GetAsync ( "" ).Result;
+                string json = response.Content.ReadAsStringAsync ().Result;
+                ChannelEmoticonCollection = JsonConvert.DeserializeObject<BTTVEmoticonCollection> ( json );
+                OnChannelEmoticonsLoaded?.Invoke( ChannelEmoticonCollection );
+            }
+        }
 
         public static void LoadOfficialEmoticons () {
             using ( HttpClient client = new HttpClient () ) {
-                client.BaseAddress = new Uri ( URL );
+                string url = "https://api.betterttv.net/2/emotes";
+                client.BaseAddress = new Uri ( url );
                 client.DefaultRequestHeaders.Accept.Add ( new MediaTypeWithQualityHeaderValue ( "application/json" ) );
                 HttpResponseMessage response = client.GetAsync ( "" ).Result;
-
-                if ( !response.IsSuccessStatusCode )
-                    return;
-
                 string json = response.Content.ReadAsStringAsync ().Result;
-                EmoticonCollection = JsonConvert.DeserializeObject<BTTVEmoticonCollection> ( json );
-                OnOfficialEmoticonsLoaded?. Invoke ();
+                OfficialEmoticonCollection = JsonConvert.DeserializeObject<BTTVEmoticonCollection> ( json );
+                OnOfficialEmoticonsLoaded?. Invoke ( OfficialEmoticonCollection );
             }
         }
     }

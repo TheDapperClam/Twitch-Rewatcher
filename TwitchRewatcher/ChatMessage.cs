@@ -14,6 +14,17 @@ namespace TwitchRewatcher
         [JsonProperty ( "emoticons" )]
         public TwitchEmoticon[] Emoticons { get; set; }
 
+        public ChatMessage () {
+            BTTVEmoticonLoader.OnChannelEmoticonsLoaded += new BTTVEmoticonLoader.BTTVEmoticonEventHandler ( OnChannelEmoticonsLoaded );
+        }
+
+        private void OnChannelEmoticonsLoaded ( BTTVEmoticonCollection collection ) {
+            foreach ( BTTVEmoticon emote in collection.Emoticons ) {
+                string image = string.Format ( IMAGE_TAG_TEMPLATE, emote.GetImage () );
+                Body = Body.Replace ( emote.Code, image );
+            }
+        }
+
         [OnDeserialized]
         private void OnDeserialized ( StreamingContext context ) {
             if ( Emoticons != null ) {
@@ -27,9 +38,11 @@ namespace TwitchRewatcher
                 }
             }
 
-            foreach ( BTTVEmoticon emote in BTTVEmoticonLoader.EmoticonCollection.Emoticons ) {
-                string image = string.Format ( IMAGE_TAG_TEMPLATE, emote.GetImage () );
-                Body = Body.Replace ( emote.Code, image );
+            if ( BTTVEmoticonLoader.OfficialEmoticonCollection != null ) {
+                foreach ( BTTVEmoticon emote in BTTVEmoticonLoader.OfficialEmoticonCollection.Emoticons ) {
+                    string image = string.Format ( IMAGE_TAG_TEMPLATE, emote.GetImage () );
+                    Body = Body.Replace ( emote.Code, image );
+                }
             }
         }
     }

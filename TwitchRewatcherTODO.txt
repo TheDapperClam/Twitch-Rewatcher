@@ -2,7 +2,6 @@
 - Warn user if they are about to queue a download with an already existing filename.
 - Add ability to cancel current download.
 - Add ability to auto download new streams.
-- Add BTTV emote support.
 - Add FFZ emote support.
 - Add option to download chat only
 - Add option to download vido only

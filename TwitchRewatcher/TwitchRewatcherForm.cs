@@ -74,7 +74,7 @@ namespace TwitchRewatcher
             if ( !IsChatHtmlLoaded () )
                 return;
 
-            chatList.InnerHtml += obj.GetFormattedMessage ();
+            chatList.InnerHtml += obj.Message.Body;
             chatDocument.Window.ScrollTo ( 0, chatDocument.Body.ScrollRectangle.Height );
         }
         private void ClearChat () {
@@ -414,8 +414,10 @@ namespace TwitchRewatcher
         private void openStreamButton_Click ( object sender, EventArgs e ) {
             using ( CommonOpenFileDialog dialog = new CommonOpenFileDialog () ) {
                 dialog.IsFolderPicker = true;
+                CommonFileDialogResult result = dialog.ShowDialog ();
+                Focus ();
 
-                if ( dialog.ShowDialog () != CommonFileDialogResult.Ok )
+                if ( result != CommonFileDialogResult.Ok )
                     return;
 
                 SaveCurrentConfig ();

@@ -12,9 +12,9 @@ namespace TwitchRewatcher {
     public partial class LoadingForm : Form {
         private TwitchRewatcherForm rewatcherForm = new TwitchRewatcherForm ();
 
-        private void OnOfficitalEmoticonsLoaded () {
+        private void OnOfficitalEmoticonsLoaded ( BTTVEmoticonCollection collection ) {
             rewatcherForm.Show ();
-            WindowState = FormWindowState.Minimized;
+            Hide ();
         }
 
         public LoadingForm () {
@@ -23,11 +23,14 @@ namespace TwitchRewatcher {
 
         private void LoadingForm_Load ( object sender, EventArgs e ) {
             BTTVEmoticonLoader.OnOfficialEmoticonsLoaded += new BTTVEmoticonLoader.BTTVEmoticonEventHandler ( OnOfficitalEmoticonsLoaded );
-            BTTVEmoticonLoader.LoadOfficialEmoticons ();
         }
 
         private void LoadingForm_FormClosing ( object sender, FormClosingEventArgs e ) {
             rewatcherForm.Dispose ();
+        }
+
+        private void LoadingForm_Shown ( object sender, EventArgs e ) {
+            BTTVEmoticonLoader.LoadOfficialEmoticons ();
         }
     }
 }

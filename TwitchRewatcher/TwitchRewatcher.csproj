@@ -78,6 +78,7 @@
     <Compile Include="LoadingForm.Designer.cs">
       <DependentUpon>LoadingForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="TwitchAPI.cs" />
     <Compile Include="TwitchEmoticon.cs" />
     <Compile Include="TwitchRewatcherForm.cs">
       <SubType>Form</SubType>
@@ -94,6 +95,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StreamConfigManager.cs" />
+    <Compile Include="TwitchUser.cs" />
+    <Compile Include="TwitchUserData.cs" />
     <Compile Include="VideoConfig.cs" />
     <Compile Include="VodDownloadEntry.cs" />
     <Compile Include="VodDownloader.cs" />
