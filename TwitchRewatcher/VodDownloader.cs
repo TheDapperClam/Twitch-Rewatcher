@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using System.IO.Compression;
 using System.Text.RegularExpressions;
 
 namespace TwitchRewatcher {
@@ -19,10 +18,6 @@ namespace TwitchRewatcher {
 
         private static Process youtubeDlProcess = null;
         private static Process reChatToolProcess = null;
-
-        private static string currentTitle;
-        private static string baseDirectory;
-        private static string tempDirectory;
 
         public delegate void VodEventHandler ();
         public static event VodEventHandler OnDownloadFinished;
@@ -44,35 +39,18 @@ namespace TwitchRewatcher {
             if ( IsDownloading )
                 return;
 
-            ZipFile.CreateFromDirectory ( tempDirectory, Path.Combine ( baseDirectory, currentTitle + ".dtrs" ) );
-            DeleteTempDirectory ();
-
             VideoDownloadProgress = 0.0f;
             ChatDownloadProgress = 0.0f;
             OnDownloadFinished?.Invoke ();
         }
 
-        private static void DeleteTempDirectory () {
-            if ( !Directory.Exists ( tempDirectory ) )
-                return;
-
-            Directory.Delete ( tempDirectory, true );
-        }
-
         public static void Download ( string title, string source, string output = null ) {
             string id = Regex.Match ( source, @"videos/([0-9]+?)\b" ).Groups[ 1 ].Value;
-            tempDirectory = Path.Combine ( output, "temp" );
-            baseDirectory = output;
-
-            foreach ( char c in ILLEGAL_PATH_CHARS )
-                tempDirectory.Replace ( c.ToString (), "" );
-
-            currentTitle = title;
+            string baseDirectory = Path.Combine ( output, title );
+            System.Diagnostics.Debug.WriteLine ( baseDirectory + " " + source );
             VideoDownloadProgress = 0.0f;
             ChatDownloadProgress = 0.0f;
-
-            DeleteTempDirectory ();
-            Directory.CreateDirectory ( tempDirectory );
+            Directory.CreateDirectory ( baseDirectory );
 
             ProcessStartInfo youtubeDlInfo = new ProcessStartInfo ( Path.Combine ( Environment.CurrentDirectory, YOUTUBE_DL_PATH ) );
             ProcessStartInfo rechatToolInfo = new ProcessStartInfo ( Path.Combine ( Environment.CurrentDirectory, RECHAT_TOOL_PATH ) );
@@ -83,8 +61,8 @@ namespace TwitchRewatcher {
             youtubeDlInfo.CreateNoWindow = true;
             rechatToolInfo.CreateNoWindow = true;
             rechatToolInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            youtubeDlInfo.Arguments = string.Format ( "--newline -o \"{0}\\video.%(ext)s\" \"{1}\"", tempDirectory, source );
-            rechatToolInfo.Arguments = string.Format ( "-d {0} \"{1}\"", id, tempDirectory + "\\chat.dtc" );
+            youtubeDlInfo.Arguments = string.Format ( "--newline -o \"{0}\\video.%(ext)s\" \"{1}\"", baseDirectory, source );
+            rechatToolInfo.Arguments = string.Format ( "-d {0} \"{1}\"", id, baseDirectory + "/chat.dtc" );
 
             youtubeDlProcess = Process.Start ( youtubeDlInfo );
             reChatToolProcess = Process.Start ( rechatToolInfo );
@@ -92,9 +70,9 @@ namespace TwitchRewatcher {
             reChatToolProcess.EnableRaisingEvents = true;
             youtubeDlProcess.BeginOutputReadLine ();
             reChatToolProcess.BeginOutputReadLine ();
+
             youtubeDlProcess.Exited += new EventHandler ( VideoExit );
             reChatToolProcess.Exited += new EventHandler ( ChatExit );
-
             youtubeDlProcess.OutputDataReceived += new DataReceivedEventHandler ( VideoDataRecieved );
             reChatToolProcess.OutputDataReceived += new DataReceivedEventHandler ( ChatDataRecieved );
         }
@@ -122,13 +100,6 @@ namespace TwitchRewatcher {
 
             if ( IsDownloadingChat && !reChatToolProcess.HasExited )
                 reChatToolProcess.Kill ();
-
-            while ( !downloadFinished && Directory.Exists ( tempDirectory ) ) {
-                if ( IsDownloading )
-                    continue;
-
-                DeleteTempDirectory ();
-            }
         }
 
         public static float TotalDownloadProgress () {

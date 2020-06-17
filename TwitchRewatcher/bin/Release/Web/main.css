@@ -1,16 +1,20 @@
 .arialFont {
 	font-family: "Arial";
-	font-size: 12pt;
+	font-size: 11pt;
+}
+
+body {
+    position: fixed;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .darkElement {
-	background-color: rgb(64,64,64);
+	background-color: rgb(32,32,32);
 	color: white;
 }
 
 .emote {
-    width: 32px;
-    height: 32px;
     vertical-align: middle;
     text-align: center;
 }
@@ -34,11 +38,6 @@
 
 .mediumPadding {
     padding: 8px;
-}
-
-ul {
-    padding: 0;
-    margin: 0;
 }
 
 li {

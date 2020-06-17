@@ -38,6 +38,9 @@
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>twitchrewatchericon_jfI_icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Accord, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
       <HintPath>..\packages\Accord.3.8.0\lib\net46\Accord.dll</HintPath>
@@ -198,9 +201,13 @@
     <Content Include="Tools\RechatTool\RechatTool.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Tools\Youtube-DL\ffmpeg.exe" />
+    <Content Include="Tools\Youtube-DL\ffplay.exe" />
+    <Content Include="Tools\Youtube-DL\ffprobe.exe" />
     <Content Include="Tools\Youtube-DL\youtube-dl.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="twitchrewatchericon_jfI_icon.ico" />
     <Content Include="Web\chat.htm">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
