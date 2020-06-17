@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
+using System.Linq;
 using System.Runtime.Serialization;
 
-namespace TwitchRewatcher
-{
+namespace TwitchRewatcher {
     public class ChatMessage
     {
         private const string IMAGE_TAG_TEMPLATE = "<img class='emote' src='{0}' />";
@@ -15,11 +15,11 @@ namespace TwitchRewatcher
         public TwitchEmoticon[] Emoticons { get; set; }
 
         public ChatMessage () {
-            BTTVEmoticonLoader.OnChannelEmoticonsLoaded += new BTTVEmoticonLoader.BTTVEmoticonEventHandler ( OnChannelEmoticonsLoaded );
+            BTTVEmoticonLoader.OnChannelEmoticonsLoaded += new BTTVEmoticonLoader.BTTVCollectionEventHandler ( OnChannelEmoticonsLoaded );
         }
 
         private void OnChannelEmoticonsLoaded ( BTTVEmoticonCollection collection ) {
-            foreach ( BTTVEmoticon emote in collection.Emoticons ) {
+            foreach ( BTTVEmoticon emote in collection.ChannelEmoticons.Union ( collection.SharedEmoticons ) ) {
                 string image = string.Format ( IMAGE_TAG_TEMPLATE, emote.GetImage () );
                 Body = Body.Replace ( emote.Code, image );
             }
@@ -38,8 +38,8 @@ namespace TwitchRewatcher
                 }
             }
 
-            if ( BTTVEmoticonLoader.OfficialEmoticonCollection != null ) {
-                foreach ( BTTVEmoticon emote in BTTVEmoticonLoader.OfficialEmoticonCollection.Emoticons ) {
+            if ( BTTVEmoticonLoader.OfficialEmoticons != null ) {
+                foreach ( BTTVEmoticon emote in BTTVEmoticonLoader.OfficialEmoticons ) {
                     string image = string.Format ( IMAGE_TAG_TEMPLATE, emote.GetImage () );
                     Body = Body.Replace ( emote.Code, image );
                 }

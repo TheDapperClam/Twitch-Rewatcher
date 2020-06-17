@@ -1,28 +1,24 @@
-﻿using System;
+﻿using Microsoft.WindowsAPICodePack.Dialogs;
+using System;
 using System.ComponentModel;
 using System.Windows.Forms;
-using System.Drawing;
-using Microsoft.WindowsAPICodePack.Dialogs;
 
-namespace TwitchRewatcher
-{
+namespace TwitchRewatcher {
     public partial class DownloadVodForm : Form
     {
         private BindingList<VodDownloadEntry> downloadQueue = new BindingList<VodDownloadEntry> ();
-        private int downloadIndex = 0;
 
         private void OnDownloadFinished () {
-            SetDataRowColor ( downloadIndex, Color.Green );
-            downloadIndex++;
-
             if ( downloadQueue == null )
                 return;
 
-            if ( downloadIndex >= downloadQueue.Count )
+            downloadQueue.RemoveAt ( 0 );
+            OnDownloadProgress ();
+
+            if ( downloadQueue.Count <= 0 )
                 return;
 
-            SetDataRowColor ( downloadIndex, Color.Yellow );
-            VodDownloadEntry nextEntry = downloadQueue[ downloadIndex ];
+            VodDownloadEntry nextEntry = downloadQueue[ 0 ];
             VodDownloader.Download ( nextEntry.Name, nextEntry.URL, nextEntry.Destination );
         }
 
@@ -38,15 +34,6 @@ namespace TwitchRewatcher
 
             downloadProgressLabel.BeginInvoke ( (MethodInvoker) delegate () {
                 downloadProgressLabel.Text = "Progress: " + downloadProgress + "%";
-            } );
-        }
-
-        private void SetDataRowColor ( int index, Color color ) {
-            vodDownloadQueueDataGridView.BeginInvoke ( (MethodInvoker) delegate () {
-                if ( index < 0 || index >= vodDownloadQueueDataGridView.Rows.Count )
-                    return;
-
-                vodDownloadQueueDataGridView.Rows[ index ].DefaultCellStyle.BackColor = color;
             } );
         }
 
@@ -82,7 +69,6 @@ namespace TwitchRewatcher
             downloadQueue.Add ( new VodDownloadEntry ( urlTextBox.Text, titleTextBox.Text, destinationTextBox.Text ) );
 
             if ( !VodDownloader.IsDownloadingChat && !VodDownloader.IsDownloadingVideo ) {
-                SetDataRowColor ( downloadIndex, Color.Yellow );
                 VodDownloader.Download ( titleTextBox.Text, urlTextBox.Text, destinationTextBox.Text );
             }
 

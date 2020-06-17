@@ -2,7 +2,9 @@
 
 namespace TwitchRewatcher {
     public class BTTVEmoticonCollection {
-        [JsonProperty("emotes")]
-        public BTTVEmoticon[] Emoticons { get; set; }
+        [JsonProperty("channelEmotes")]
+        public BTTVEmoticon[] ChannelEmoticons { get; set; }
+        [JsonProperty ( "sharedEmotes" )]
+        public BTTVEmoticon[] SharedEmoticons { get; set; }
     }
 }

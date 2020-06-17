@@ -1,24 +1,28 @@
-﻿using System.IO;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using System.IO;
 
-namespace TwitchRewatcher
-{
+namespace TwitchRewatcher {
     public static class StreamConfigManager
     {
         public static void SaveConfig ( string path, StreamConfig config ) {
             if ( config == null )
                 return;
 
-            string configPath = Path.Combine ( path, "StreamConfig.dtj" );
-            using ( StreamWriter stream = new StreamWriter ( configPath ) ) {
-                using ( JsonWriter writer = new JsonTextWriter ( stream ) ) {
-                    JsonSerializer serializer = new JsonSerializer ();
-                    serializer.Serialize ( stream, config );
-                }
+            string file = Path.Combine ( path, TwitchRewatcherForm.CONFIG_FILE_NAME );
+
+            if ( !File.Exists ( file ) )
+                return;
+
+            using ( StreamWriter writer = new StreamWriter ( file ) ) {
+                JsonSerializer serializer = new JsonSerializer ();
+                serializer.Serialize ( writer, config );
             }
         }
 
         public static StreamConfig LoadConfig ( string path ) {
+            if ( !File.Exists ( path ) )
+                return null;
+
             StreamConfig cfg = JsonConvert.DeserializeObject<StreamConfig> ( File.ReadAllText ( path ) );
             return cfg;
         }

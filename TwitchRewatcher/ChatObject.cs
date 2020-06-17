@@ -1,9 +1,8 @@
-﻿using System;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using System;
 using System.Runtime.Serialization;
 
-namespace TwitchRewatcher
-{
+namespace TwitchRewatcher {
     public class ChatObject
     {
         [JsonProperty( "channel_id" )]

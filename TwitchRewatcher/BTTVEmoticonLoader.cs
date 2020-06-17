@@ -1,41 +1,43 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using Newtonsoft.Json;
 
 namespace TwitchRewatcher {
     public static class BTTVEmoticonLoader {
-        public delegate void BTTVEmoticonEventHandler ( BTTVEmoticonCollection collection );
+        private const string OFFICIAL_EMOTE_URL = "https://api.betterttv.net/3/cached/emotes/global";
+        private const string CHANNEL_EMOTE_URL = "https://api.betterttv.net/3/cached/users/twitch/{0}";
+
+        public delegate void BTTVEmoticonEventHandler ( BTTVEmoticon[] emoticons );
+        public delegate void BTTVCollectionEventHandler ( BTTVEmoticonCollection collection );
         public static event BTTVEmoticonEventHandler OnOfficialEmoticonsLoaded;
-        public static event BTTVEmoticonEventHandler OnChannelEmoticonsLoaded;
+        public static event BTTVCollectionEventHandler OnChannelEmoticonsLoaded;
 
-        public static BTTVEmoticonCollection OfficialEmoticonCollection { get; private set; }
-        public static BTTVEmoticonCollection ChannelEmoticonCollection { get; private set; }
+        public static BTTVEmoticon[] OfficialEmoticons{ get; private set; }
+        public static BTTVEmoticonCollection ChannelEmoticons { get; private set; }
 
-        public static void LoadChannelEmoticons ( TwitchUser channel ) {
+        public static void LoadChannelEmoticons ( string channel ) {
             if ( channel == null )
                 return;
 
             using ( HttpClient client = new HttpClient () ) {
-                string url = "https://api.betterttv.net/2/channels/{0}";
-                client.BaseAddress = new Uri ( string.Format ( url, channel.Login ) );
+                client.BaseAddress = new Uri ( string.Format ( CHANNEL_EMOTE_URL, channel ) );
                 client.DefaultRequestHeaders.Accept.Add ( new MediaTypeWithQualityHeaderValue ( "application/json" ) );
                 HttpResponseMessage response = client.GetAsync ( "" ).Result;
                 string json = response.Content.ReadAsStringAsync ().Result;
-                ChannelEmoticonCollection = JsonConvert.DeserializeObject<BTTVEmoticonCollection> ( json );
-                OnChannelEmoticonsLoaded?.Invoke( ChannelEmoticonCollection );
+                ChannelEmoticons = JsonConvert.DeserializeObject<BTTVEmoticonCollection> ( json );
+                OnChannelEmoticonsLoaded?.Invoke ( ChannelEmoticons );
             }
         }
 
         public static void LoadOfficialEmoticons () {
             using ( HttpClient client = new HttpClient () ) {
-                string url = "https://api.betterttv.net/2/emotes";
-                client.BaseAddress = new Uri ( url );
+                client.BaseAddress = new Uri ( OFFICIAL_EMOTE_URL );
                 client.DefaultRequestHeaders.Accept.Add ( new MediaTypeWithQualityHeaderValue ( "application/json" ) );
                 HttpResponseMessage response = client.GetAsync ( "" ).Result;
                 string json = response.Content.ReadAsStringAsync ().Result;
-                OfficialEmoticonCollection = JsonConvert.DeserializeObject<BTTVEmoticonCollection> ( json );
-                OnOfficialEmoticonsLoaded?. Invoke ( OfficialEmoticonCollection );
+                OfficialEmoticons = JsonConvert.DeserializeObject<BTTVEmoticon[]> ( json );
+                OnOfficialEmoticonsLoaded?. Invoke ( OfficialEmoticons );
             }
         }
     }

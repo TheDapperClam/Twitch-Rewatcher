@@ -1,10 +1,10 @@
 ﻿using System;
-using System.IO;
 using System.Diagnostics;
+using System.IO;
+using System.IO.Compression;
 using System.Text.RegularExpressions;
 
-namespace TwitchRewatcher
-{
+namespace TwitchRewatcher {
     public static class VodDownloader
     {
         private const string YOUTUBE_DL_PATH = "Tools\\Youtube-DL\\youtube-dl.exe";
@@ -20,52 +20,59 @@ namespace TwitchRewatcher
         private static Process youtubeDlProcess = null;
         private static Process reChatToolProcess = null;
 
-        private static string currentDirectory;
+        private static string currentTitle;
+        private static string baseDirectory;
+        private static string tempDirectory;
 
         public delegate void VodEventHandler ();
         public static event VodEventHandler OnDownloadFinished;
         public static event VodEventHandler OnDownloadProgress;
 
         private static void ChatDataRecieved ( object sender, DataReceivedEventArgs e ) {
-            if ( OnDownloadProgress != null )
-                OnDownloadProgress ();
+            OnDownloadProgress?.Invoke ();
         }
 
         private static void ChatExit ( object sender, EventArgs e ) {
-            Console.WriteLine ( "Chat Exit" );
             ChatDownloadProgress = 100.0f;
             reChatToolProcess.Dispose ();
             reChatToolProcess = null;
             CheckDownloadFinished ();
-
-            if ( OnDownloadProgress != null )
-                OnDownloadProgress ();
+            OnDownloadProgress?.Invoke ();
         }
 
         private static void CheckDownloadFinished () {
             if ( IsDownloading )
                 return;
 
+            ZipFile.CreateFromDirectory ( tempDirectory, Path.Combine ( baseDirectory, currentTitle + ".dtrs" ) );
+            DeleteTempDirectory ();
+
             VideoDownloadProgress = 0.0f;
             ChatDownloadProgress = 0.0f;
+            OnDownloadFinished?.Invoke ();
+        }
 
-            if ( OnDownloadFinished != null )
-                OnDownloadFinished ();
+        private static void DeleteTempDirectory () {
+            if ( !Directory.Exists ( tempDirectory ) )
+                return;
+
+            Directory.Delete ( tempDirectory, true );
         }
 
         public static void Download ( string title, string source, string output = null ) {
             string id = Regex.Match ( source, @"videos/([0-9]+?)\b" ).Groups[ 1 ].Value;
-            string o = Path.Combine ( output, title + "\\" );
+            tempDirectory = Path.Combine ( output, "temp" );
+            baseDirectory = output;
 
             foreach ( char c in ILLEGAL_PATH_CHARS )
-                o.Replace ( c.ToString (), "" );
+                tempDirectory.Replace ( c.ToString (), "" );
 
-            currentDirectory = o;
+            currentTitle = title;
             VideoDownloadProgress = 0.0f;
             ChatDownloadProgress = 0.0f;
 
-            if ( !Directory.Exists ( o ) )
-                Directory.CreateDirectory ( o );
+            DeleteTempDirectory ();
+            Directory.CreateDirectory ( tempDirectory );
 
             ProcessStartInfo youtubeDlInfo = new ProcessStartInfo ( Path.Combine ( Environment.CurrentDirectory, YOUTUBE_DL_PATH ) );
             ProcessStartInfo rechatToolInfo = new ProcessStartInfo ( Path.Combine ( Environment.CurrentDirectory, RECHAT_TOOL_PATH ) );
@@ -76,8 +83,8 @@ namespace TwitchRewatcher
             youtubeDlInfo.CreateNoWindow = true;
             rechatToolInfo.CreateNoWindow = true;
             rechatToolInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            youtubeDlInfo.Arguments = string.Format ( "--newline -o \"{0}\\{1}.%(ext)s\" \"{2}\"", o, title, source );
-            rechatToolInfo.Arguments = string.Format ( "-d {0} \"{1}\"", id, o + title + ".dtc" );
+            youtubeDlInfo.Arguments = string.Format ( "--newline -o \"{0}\\video.%(ext)s\" \"{1}\"", tempDirectory, source );
+            rechatToolInfo.Arguments = string.Format ( "-d {0} \"{1}\"", id, tempDirectory + "\\chat.dtc" );
 
             youtubeDlProcess = Process.Start ( youtubeDlInfo );
             reChatToolProcess = Process.Start ( rechatToolInfo );
@@ -116,15 +123,11 @@ namespace TwitchRewatcher
             if ( IsDownloadingChat && !reChatToolProcess.HasExited )
                 reChatToolProcess.Kill ();
 
-            while ( !downloadFinished && Directory.Exists ( currentDirectory ) ) {
+            while ( !downloadFinished && Directory.Exists ( tempDirectory ) ) {
                 if ( IsDownloading )
                     continue;
 
-                try {
-                    Directory.Delete ( currentDirectory, true );
-                } catch {
-
-                }
+                DeleteTempDirectory ();
             }
         }
 
@@ -143,19 +146,14 @@ namespace TwitchRewatcher
             float progress = 0.0f;
             float.TryParse ( match, out progress );
             VideoDownloadProgress = progress;
-
-            if ( OnDownloadProgress != null )
-                OnDownloadProgress ();
+            OnDownloadProgress?.Invoke ();
         }
 
         private static void VideoExit ( object sender, EventArgs e ) {
-            Console.WriteLine ( "Video Exit" );
             youtubeDlProcess.Dispose ();
             youtubeDlProcess = null;
             CheckDownloadFinished ();
-
-            if ( OnDownloadProgress != null )
-                OnDownloadProgress ();
+            OnDownloadProgress?.Invoke ();
         }
     }
 }

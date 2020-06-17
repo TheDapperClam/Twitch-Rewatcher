@@ -40,14 +40,14 @@
             this.soundButton = new System.Windows.Forms.Button();
             this.volumeTrackBar = new System.Windows.Forms.TrackBar();
             this.theaterModeButton = new System.Windows.Forms.Button();
+            this.currentTimeLabel = new System.Windows.Forms.Label();
+            this.maxTimeLabel = new System.Windows.Forms.Label();
+            this.toggleChatButton = new System.Windows.Forms.Button();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.notifyIconContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.showToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.currentTimeLabel = new System.Windows.Forms.Label();
             this.videoPlayer = new AxWMPLib.AxWindowsMediaPlayer();
-            this.maxTimeLabel = new System.Windows.Forms.Label();
-            this.toggleChatButton = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.controlPanel = new System.Windows.Forms.Panel();
             this.hideMouseMoveControlsTimer = new System.Windows.Forms.Timer(this.components);
@@ -241,37 +241,6 @@
             this.theaterModeButton.UseVisualStyleBackColor = false;
             this.theaterModeButton.Click += new System.EventHandler(this.theaterModeButton_Click);
             // 
-            // notifyIcon
-            // 
-            this.notifyIcon.ContextMenuStrip = this.notifyIconContextMenuStrip;
-            this.notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
-            this.notifyIcon.Text = "Twitch Rewatcher";
-            this.notifyIcon.Visible = true;
-            this.notifyIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon_MouseDoubleClick);
-            this.notifyIcon.MouseMove += new System.Windows.Forms.MouseEventHandler(this.notifyIcon_MouseMove);
-            // 
-            // notifyIconContextMenuStrip
-            // 
-            this.notifyIconContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.showToolStripMenuItem,
-            this.exitToolStripMenuItem});
-            this.notifyIconContextMenuStrip.Name = "notifyIconContextMenuStrip";
-            this.notifyIconContextMenuStrip.Size = new System.Drawing.Size(104, 48);
-            // 
-            // showToolStripMenuItem
-            // 
-            this.showToolStripMenuItem.Name = "showToolStripMenuItem";
-            this.showToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
-            this.showToolStripMenuItem.Text = "Show";
-            this.showToolStripMenuItem.Click += new System.EventHandler(this.showToolStripMenuItem_Click);
-            // 
-            // exitToolStripMenuItem
-            // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
-            this.exitToolStripMenuItem.Text = "Exit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
-            // 
             // currentTimeLabel
             // 
             this.currentTimeLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -285,20 +254,6 @@
             this.currentTimeLabel.Text = "00:00:00";
             this.currentTimeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.twitchRewatcherToolTip.SetToolTip(this.currentTimeLabel, "Current Stream Position");
-            // 
-            // videoPlayer
-            // 
-            this.videoPlayer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.videoPlayer.Enabled = true;
-            this.videoPlayer.Location = new System.Drawing.Point(0, 0);
-            this.videoPlayer.Name = "videoPlayer";
-            this.videoPlayer.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("videoPlayer.OcxState")));
-            this.videoPlayer.Size = new System.Drawing.Size(662, 493);
-            this.videoPlayer.TabIndex = 0;
-            this.videoPlayer.PlayStateChange += new AxWMPLib._WMPOCXEvents_PlayStateChangeEventHandler(this.videoPlayer_PlayStateChange);
-            this.videoPlayer.PositionChange += new AxWMPLib._WMPOCXEvents_PositionChangeEventHandler(this.videoPlayer_PositionChange);
-            this.videoPlayer.MediaChange += new AxWMPLib._WMPOCXEvents_MediaChangeEventHandler(this.videoPlayer_MediaChange);
-            this.videoPlayer.MouseUpEvent += new AxWMPLib._WMPOCXEvents_MouseUpEventHandler(this.videoPlayer_MouseUpEvent);
             // 
             // maxTimeLabel
             // 
@@ -330,6 +285,53 @@
             this.twitchRewatcherToolTip.SetToolTip(this.toggleChatButton, "Toggle Chat");
             this.toggleChatButton.UseVisualStyleBackColor = true;
             this.toggleChatButton.Click += new System.EventHandler(this.toggleChatButton_Click);
+            // 
+            // notifyIcon
+            // 
+            this.notifyIcon.BalloonTipText = "Twitch Rewatcher is still running in the background. To close, right click the tr" +
+    "ay icon and select \'Exit\'.";
+            this.notifyIcon.ContextMenuStrip = this.notifyIconContextMenuStrip;
+            this.notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
+            this.notifyIcon.Text = "Twitch Rewatcher";
+            this.notifyIcon.Visible = true;
+            this.notifyIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon_MouseDoubleClick);
+            this.notifyIcon.MouseMove += new System.Windows.Forms.MouseEventHandler(this.notifyIcon_MouseMove);
+            // 
+            // notifyIconContextMenuStrip
+            // 
+            this.notifyIconContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.showToolStripMenuItem,
+            this.exitToolStripMenuItem});
+            this.notifyIconContextMenuStrip.Name = "notifyIconContextMenuStrip";
+            this.notifyIconContextMenuStrip.Size = new System.Drawing.Size(104, 48);
+            // 
+            // showToolStripMenuItem
+            // 
+            this.showToolStripMenuItem.Name = "showToolStripMenuItem";
+            this.showToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.showToolStripMenuItem.Text = "Show";
+            this.showToolStripMenuItem.Click += new System.EventHandler(this.showToolStripMenuItem_Click);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
+            // videoPlayer
+            // 
+            this.videoPlayer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.videoPlayer.Enabled = true;
+            this.videoPlayer.Location = new System.Drawing.Point(0, 0);
+            this.videoPlayer.Name = "videoPlayer";
+            this.videoPlayer.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("videoPlayer.OcxState")));
+            this.videoPlayer.Size = new System.Drawing.Size(662, 493);
+            this.videoPlayer.TabIndex = 0;
+            this.videoPlayer.PlayStateChange += new AxWMPLib._WMPOCXEvents_PlayStateChangeEventHandler(this.videoPlayer_PlayStateChange);
+            this.videoPlayer.PositionChange += new AxWMPLib._WMPOCXEvents_PositionChangeEventHandler(this.videoPlayer_PositionChange);
+            this.videoPlayer.MediaChange += new AxWMPLib._WMPOCXEvents_MediaChangeEventHandler(this.videoPlayer_MediaChange);
+            this.videoPlayer.MouseUpEvent += new AxWMPLib._WMPOCXEvents_MouseUpEventHandler(this.videoPlayer_MouseUpEvent);
             // 
             // panel1
             // 

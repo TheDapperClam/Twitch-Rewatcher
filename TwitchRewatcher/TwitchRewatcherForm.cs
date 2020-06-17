@@ -1,19 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+﻿using Microsoft.WindowsAPICodePack.Dialogs;
+using System;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Microsoft.WindowsAPICodePack.Dialogs;
-using Newtonsoft.Json;
 
-namespace TwitchRewatcher
-{
+namespace TwitchRewatcher {
     public enum VideoMode {
         Normal = 0,
         Theater,
@@ -23,6 +14,10 @@ namespace TwitchRewatcher
     {
         public delegate void MouseMovedEvent ();
         public event MouseMovedEvent GlobalMouseMove;
+
+        public const string VIDEO_FILE_NAME = "video.mp4";
+        public const string CHAT_FILE_NAME = "chat.dtc";
+        public const string CONFIG_FILE_NAME = "config.cfg";
 
         private const int WM_MOUSEMOVE = 0x0200;
         private const double PLAYBACK_TIME_TRAVEL_AMOUNT = 10;
@@ -37,12 +32,14 @@ namespace TwitchRewatcher
         private bool isMaximized;
         private bool optionsPanelVisible = true;
         private bool chatVisible = true;
+        private bool showRunningInBackgroundNotification = true;
 
         private Point oldCursorPosition;
 
         private bool minimizeOnClose = true;
 
         private StreamConfig currentStreamConfig;
+        private string currentStreamPath;
         private string currentVideoPath;
         private string currentChatPath;
 
@@ -107,6 +104,9 @@ namespace TwitchRewatcher
         }
 
         private void LoadChat ( string path ) {
+            if ( !File.Exists ( path ) )
+                return;
+
             currentChatPath = path;
             chatMessages = ChatLoader.Load ( path );
         }
@@ -142,6 +142,10 @@ namespace TwitchRewatcher
 
         private void MinimizeToTray () {
             Hide ();
+
+            if ( showRunningInBackgroundNotification )
+                notifyIcon.ShowBalloonTip ( 10000 );
+            showRunningInBackgroundNotification = false;
         }
 
         private void OnGlobalMouseMove () {
@@ -189,9 +193,8 @@ namespace TwitchRewatcher
             if ( currentStreamConfig == null )
                 currentStreamConfig = new StreamConfig ();
 
-            string basePath = Directory.GetParent ( currentVideoPath ).FullName;
             currentStreamConfig.PlaybackTime = GetPlaybackTime ();
-            StreamConfigManager.SaveConfig ( basePath, currentStreamConfig );
+            StreamConfigManager.SaveConfig ( currentStreamPath, currentStreamConfig );
         }
 
         private void SetChatVisibility ( bool visible ) {
@@ -273,7 +276,6 @@ namespace TwitchRewatcher
                     FormBorderStyle = FormBorderStyle.Sizable;
                     WindowState = isMaximized ? FormWindowState.Maximized : FormWindowState.Normal;
                     Bounds = oldBounds;
-                    TopMost = false;
                     break;
                 case VideoMode.Theater:
                     isMaximized = WindowState == FormWindowState.Maximized;
@@ -281,7 +283,6 @@ namespace TwitchRewatcher
                     FormBorderStyle = FormBorderStyle.None;
                     WindowState = FormWindowState.Normal;
                     Bounds = Screen.FromControl ( this ).Bounds;
-                    TopMost = true;
                     SetMouseMoveControlVisibility ( false );
                     break;
             }
@@ -414,42 +415,20 @@ namespace TwitchRewatcher
         private void openStreamButton_Click ( object sender, EventArgs e ) {
             using ( CommonOpenFileDialog dialog = new CommonOpenFileDialog () ) {
                 dialog.IsFolderPicker = true;
-                CommonFileDialogResult result = dialog.ShowDialog ();
                 Focus ();
 
-                if ( result != CommonFileDialogResult.Ok )
+                if ( dialog.ShowDialog () != CommonFileDialogResult.Ok )
                     return;
 
+                currentStreamPath = dialog.FileName;
+                string video = Path.Combine ( currentStreamPath, VIDEO_FILE_NAME );
+                string chat = Path.Combine ( currentStreamPath, CHAT_FILE_NAME );
+                string config = Path.Combine ( currentStreamPath, CONFIG_FILE_NAME );
                 SaveCurrentConfig ();
-                bool videoFound = false;
-                bool chatFound = false;
-                bool cfgFound = false;
-                string[] directories = Directory.GetFiles ( dialog.FileName );
-
-                foreach ( string d in directories ) {
-                    string extension = Path.GetExtension ( d );
-
-                    if ( !videoFound && extension == ".mp4" ) {
-                        videoFound = true;
-                        LoadVideo ( d );
-                    }
-
-                    if ( !chatFound && extension == ".dtc" ) {
-                        chatFound = true;
-                        LoadChat ( d );
-                    }
-
-                    if ( !cfgFound && extension == ".dtj" ) {
-                        cfgFound = true;
-                        LoadStreamConfig ( d );
-                    }
-
-                    if ( chatFound && videoFound && cfgFound )
-                        break;
-                }
-
-                if ( videoFound || chatFound )
-                    ClearChat ();
+                ClearChat ();
+                LoadVideo ( video );
+                LoadChat ( chat );
+                LoadStreamConfig ( config );
             }
         }
 
