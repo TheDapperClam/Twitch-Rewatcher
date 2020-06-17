@@ -163,6 +163,7 @@
             // 
             // deleteDownloadButton
             // 
+            this.deleteDownloadButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.deleteDownloadButton.Enabled = false;
             this.deleteDownloadButton.Location = new System.Drawing.Point(12, 489);
             this.deleteDownloadButton.Name = "deleteDownloadButton";

@@ -12,7 +12,8 @@ namespace TwitchRewatcher {
             if ( downloadQueue == null )
                 return;
 
-            Invoke ( new MethodInvoker ( delegate { downloadQueue.RemoveAt ( 0 ); } ) );
+            if ( downloadQueue.Count > 0 )
+                Invoke ( new MethodInvoker ( delegate { downloadQueue.RemoveAt ( 0 ); } ) );
             OnDownloadProgress ();
 
             if ( downloadQueue.Count <= 0 )
