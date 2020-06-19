@@ -21,7 +21,7 @@ namespace TwitchRewatcher {
                 t.Hours > 0 ? t.Hours.ToString () + ":" : "",
                 t.Hours > 0 && t.Minutes < 10 ? "0" + t.Minutes.ToString () + ":" : t.Minutes.ToString () + ":" ,
                 t.Seconds < 10 ? "0" + t.Seconds.ToString () : t.Seconds.ToString () );
-            Message.Body = string.Format ( "<li>{0} <span style='color:{1}'><b>{2}</b></span>: {3}</li>", timeStamp, Message.Color, Commenter.DisplayName, Message.Body );
+            Message.Body = string.Format ( "<li><span class='timeStamp'>{0}</span> <span style='color:{1}'><b>{2}</b></span>: {3}</li>", timeStamp, Message.Color, Commenter.DisplayName, Message.Body );
         }
     }
 }

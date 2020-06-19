@@ -1,4 +1,7 @@
-﻿using Microsoft.WindowsAPICodePack.Dialogs;
+﻿using CefSharp;
+using CefSharp.WinForms;
+using CefSharp.SchemeHandler;
+using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
 using System.Drawing;
 using System.IO;
@@ -21,11 +24,14 @@ namespace TwitchRewatcher {
 
         private const int WM_MOUSEMOVE = 0x0200;
         private const double PLAYBACK_TIME_TRAVEL_AMOUNT = 10;
-        private readonly string CHAT_HTML_LOCATION_String = Directory.GetCurrentDirectory () + "\\Web\\chat.htm";
+        private const string CHAT_PAGE_NAME = "chat.htm";
+        private const string CHAT_LIST_ID = "ChatList";
+        private readonly string WEB_CONTENT_LOCATION = Directory.GetCurrentDirectory () + "\\Web";
+
+        private ChromiumWebBrowser chatWebBrowser;
+
         private ChatObject[] chatMessages;
         private int chatIndex;
-        private HtmlDocument chatDocument;
-        private HtmlElement chatList;
 
         private VideoMode currentVideoMode;
         private Rectangle oldBounds;
@@ -65,34 +71,48 @@ namespace TwitchRewatcher {
         }
 
         private void AddChatObject ( ChatObject obj ) {
+            if ( chatWebBrowser == null )
+                return;
+
+            if ( chatWebBrowser.IsLoading )
+                return;
+
             if ( obj == null )
                 return;
 
-            if ( !IsChatHtmlLoaded () )
-                return;
-
-            chatList.InnerHtml += obj.Message.Body;
-            chatDocument.Window.ScrollTo ( 0, chatDocument.Body.ScrollRectangle.Height );
+            string addMessageScript = string.Format ( "document.getElementById('{0}').innerHTML += \"{1}\"", CHAT_LIST_ID, obj.Message.Body.ToString () );
+            string scrollToBottomScript = "window.scrollTo(0, document.body.scrollHeight)";
+            chatWebBrowser.ExecuteScriptAsync ( addMessageScript );
+            chatWebBrowser.ExecuteScriptAsync ( scrollToBottomScript );
         }
-        private void ClearChat () {
-            if ( !IsChatHtmlLoaded () )
-                return;
 
-            chatList.InnerHtml = null;
+        private void ClearChat () {
+            string script = string.Format ( "document.getElementById('{0}').innerHTML = ''", CHAT_LIST_ID );
+            chatWebBrowser.ExecuteScriptAsync ( script );
         }
 
         private double GetPlaybackTime () {
             return videoPlayer.Ctlcontrols.currentPosition;
         }
 
-        private bool IsChatHtmlLoaded () {
-            if ( chatDocument == null || chatList == null ) {
-                LoadChatHtml ();
+        private void InitializeChatWebBrowser () {
+            CefSettings settings = new CefSettings ();
+            settings.RegisterScheme ( new CefCustomScheme { 
+                SchemeName = "localfolder",
+                DomainName = "cefsharp",
+                SchemeHandlerFactory = new FolderSchemeHandlerFactory (
+                    rootFolder: WEB_CONTENT_LOCATION,
+                    hostName: "cefsharp",
+                    defaultPage: CHAT_PAGE_NAME
+                )
+            } );
 
-                if ( chatDocument == null || chatList == null )
-                    return false;
-            }
-            return true;
+            Cef.Initialize ( settings );
+            chatWebBrowser = new ChromiumWebBrowser ( "localfolder://cefsharp/" );
+            Controls.Add ( chatWebBrowser );
+
+            chatWebBrowser.Dock = DockStyle.Right;
+            chatWebBrowser.Width = 340;
         }
 
         private bool IsPlaying () {
@@ -109,15 +129,6 @@ namespace TwitchRewatcher {
 
             currentChatPath = path;
             chatMessages = ChatLoader.Load ( path );
-        }
-
-        private void LoadChatHtml () {
-            chatDocument = chatWebBrowser.Document;
-            chatList = chatDocument.GetElementById ( "ChatList" );
-        }
-
-        private void LoadChatPage () {
-            chatWebBrowser.Navigate ( CHAT_HTML_LOCATION_String );
         }
 
         private void LoadStreamConfig ( string path ) {
@@ -312,6 +323,7 @@ namespace TwitchRewatcher {
 
         public TwitchRewatcherForm() {
             InitializeComponent ();
+            InitializeChatWebBrowser ();
             GlobalMouseMove += new MouseMovedEvent ( OnGlobalMouseMove );
             Application.AddMessageFilter ( this );
         }
@@ -371,11 +383,6 @@ namespace TwitchRewatcher {
             oldCursorPosition = Cursor.Position;
             playbackTimeTrackBar.MouseWheel += (a, b) => ( (HandledMouseEventArgs) b ).Handled = true;
             volumeTrackBar.Value = videoPlayer.settings.volume;
-            LoadChatPage ();
-        }
-
-        private void chatWebBrowser_DocumentCompleted( object sender, WebBrowserDocumentCompletedEventArgs e ) {
-            LoadChatHtml ();
         }
 
         private void TwitchRewatcherForm_FormClosing( object sender, FormClosingEventArgs e ) {
@@ -400,6 +407,7 @@ namespace TwitchRewatcher {
                 }
             }
 
+            Cef.Shutdown ();
             VodDownloader.KillDownloads ();
             notifyIcon.Visible = false;
             Program.Close ();
