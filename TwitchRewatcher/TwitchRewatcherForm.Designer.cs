@@ -32,7 +32,6 @@
             this.openStreamButton = new System.Windows.Forms.Button();
             this.downloadVodButton = new System.Windows.Forms.Button();
             this.playbackCheckTimer = new System.Windows.Forms.Timer(this.components);
-            this.chatWebBrowser = new System.Windows.Forms.WebBrowser();
             this.autoSaveTimer = new System.Windows.Forms.Timer(this.components);
             this.twitchRewatcherToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.playbackTimeTrackBar = new System.Windows.Forms.TrackBar();
@@ -51,6 +50,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.controlPanel = new System.Windows.Forms.Panel();
             this.hideMouseMoveControlsTimer = new System.Windows.Forms.Timer(this.components);
+            this.chatWebBrowser = new System.Windows.Forms.WebBrowser();
             this.optionsPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.playbackTimeTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.volumeTrackBar)).BeginInit();
@@ -134,20 +134,6 @@
             // 
             this.playbackCheckTimer.Enabled = true;
             this.playbackCheckTimer.Tick += new System.EventHandler(this.playbackCheckTimer_Tick);
-            // 
-            // chatWebBrowser
-            // 
-            this.chatWebBrowser.AllowWebBrowserDrop = false;
-            this.chatWebBrowser.Dock = System.Windows.Forms.DockStyle.Right;
-            this.chatWebBrowser.IsWebBrowserContextMenuEnabled = false;
-            this.chatWebBrowser.Location = new System.Drawing.Point(710, 0);
-            this.chatWebBrowser.MinimumSize = new System.Drawing.Size(20, 20);
-            this.chatWebBrowser.Name = "chatWebBrowser";
-            this.chatWebBrowser.Size = new System.Drawing.Size(346, 572);
-            this.chatWebBrowser.TabIndex = 5;
-            this.chatWebBrowser.Url = new System.Uri("", System.UriKind.Relative);
-            this.chatWebBrowser.WebBrowserShortcutsEnabled = false;
-            this.chatWebBrowser.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.chatWebBrowser_DocumentCompleted);
             // 
             // autoSaveTimer
             // 
@@ -367,6 +353,20 @@
             this.hideMouseMoveControlsTimer.Interval = 5000;
             this.hideMouseMoveControlsTimer.Tick += new System.EventHandler(this.hideMouseMoveControlsTimer_Tick);
             // 
+            // chatWebBrowser
+            // 
+            this.chatWebBrowser.AllowWebBrowserDrop = false;
+            this.chatWebBrowser.Dock = System.Windows.Forms.DockStyle.Right;
+            this.chatWebBrowser.IsWebBrowserContextMenuEnabled = false;
+            this.chatWebBrowser.Location = new System.Drawing.Point(710, 0);
+            this.chatWebBrowser.MinimumSize = new System.Drawing.Size(20, 20);
+            this.chatWebBrowser.Name = "chatWebBrowser";
+            this.chatWebBrowser.Size = new System.Drawing.Size(346, 572);
+            this.chatWebBrowser.TabIndex = 5;
+            this.chatWebBrowser.Url = new System.Uri("", System.UriKind.Relative);
+            this.chatWebBrowser.WebBrowserShortcutsEnabled = false;
+            this.chatWebBrowser.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.chatWebBrowser_DocumentCompleted);
+            // 
             // TwitchRewatcherForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -400,7 +400,6 @@
         #endregion
         private System.Windows.Forms.Panel optionsPanel;
         private System.Windows.Forms.Timer playbackCheckTimer;
-        private System.Windows.Forms.WebBrowser chatWebBrowser;
         private System.Windows.Forms.Button openStreamButton;
         private System.Windows.Forms.Button downloadVodButton;
         private System.Windows.Forms.Timer autoSaveTimer;
@@ -422,6 +421,7 @@
         private System.Windows.Forms.Button theaterModeButton;
         private System.Windows.Forms.Panel controlPanel;
         private System.Windows.Forms.Timer hideMouseMoveControlsTimer;
+        private System.Windows.Forms.WebBrowser chatWebBrowser;
     }
 }
 
