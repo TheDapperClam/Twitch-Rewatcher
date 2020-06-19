@@ -12,8 +12,11 @@ namespace TwitchRewatcher {
             string json = File.ReadAllText ( path );
             ChatObject[] chatObjs = JsonConvert.DeserializeObject<List<ChatObject>> ( json ).ToArray ();
 
-            if ( chatObjs != null && chatObjs.Length > 0 )
-                BTTVEmoticonLoader.LoadChannelEmoticons ( chatObjs[ 0 ].ChannelID );
+            if ( chatObjs != null && chatObjs.Length > 0 ) {
+                string channel = chatObjs[ 0 ].ChannelID;
+                BTTVEmoticonLoader.LoadChannelEmoticons ( channel );
+                FFZEmoticonLoader.LoadChannelSets ( channel );
+            }
 
             return chatObjs;
         }

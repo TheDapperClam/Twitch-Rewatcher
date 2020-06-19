@@ -10,12 +10,11 @@ namespace TwitchRewatcher {
 
             string file = Path.Combine ( path, TwitchRewatcherForm.CONFIG_FILE_NAME );
 
-            if ( !File.Exists ( file ) )
-                return;
-
-            using ( StreamWriter writer = new StreamWriter ( file ) ) {
-                JsonSerializer serializer = new JsonSerializer ();
-                serializer.Serialize ( writer, config );
+            using ( FileStream stream = File.Open ( file, FileMode.Create ) ) {
+                using ( StreamWriter writer = new StreamWriter ( stream ) ) {
+                    JsonSerializer serializer = new JsonSerializer ();
+                    serializer.Serialize ( writer, config );
+                }
             }
         }
 

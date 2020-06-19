@@ -90,6 +90,10 @@
     <Compile Include="DownloadVodForm.Designer.cs">
       <DependentUpon>DownloadVodForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="FFZEmoticon.cs" />
+    <Compile Include="FFZEmoticonLoader.cs" />
+    <Compile Include="FFZRoom.cs" />
+    <Compile Include="FFZSet.cs" />
     <Compile Include="LoadingForm.cs">
       <SubType>Form</SubType>
     </Compile>

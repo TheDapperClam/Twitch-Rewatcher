@@ -409,7 +409,7 @@ namespace TwitchRewatcher {
             if ( downloadForm == null )
                 downloadForm = new DownloadVodForm ();
 
-            downloadForm.ShowDialog ();
+            downloadForm.Show ();
         }
 
         private void openStreamButton_Click ( object sender, EventArgs e ) {

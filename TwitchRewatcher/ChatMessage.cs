@@ -15,13 +15,44 @@ namespace TwitchRewatcher {
         public TwitchEmoticon[] Emoticons { get; set; }
 
         public ChatMessage () {
-            BTTVEmoticonLoader.OnChannelEmoticonsLoaded += new BTTVEmoticonLoader.BTTVCollectionEventHandler ( OnChannelEmoticonsLoaded );
+            BTTVEmoticonLoader.OnChannelEmoticonsLoaded += new BTTVEmoticonLoader.BTTVCollectionEventHandler ( OnBTTVChannelEmoticonsLoaded );
+            FFZEmoticonLoader.OnSetsLoaded += new FFZEmoticonLoader.FFZSetEventHandler ( OnFFZSetsLoaded );
         }
 
-        private void OnChannelEmoticonsLoaded ( BTTVEmoticonCollection collection ) {
-            foreach ( BTTVEmoticon emote in collection.ChannelEmoticons.Union ( collection.SharedEmoticons ) ) {
-                string image = string.Format ( IMAGE_TAG_TEMPLATE, emote.GetImage () );
-                Body = Body.Replace ( emote.Code, image );
+        private void OnBTTVChannelEmoticonsLoaded ( BTTVEmoticonCollection collection ) {
+            if ( collection.ChannelEmoticons != null ) {
+                foreach ( BTTVEmoticon emote in collection.ChannelEmoticons ) {
+                    string image = string.Format ( IMAGE_TAG_TEMPLATE, emote.GetImage () );
+                    Body = Body.Replace ( emote.Code, image );
+                }
+            }
+
+            if ( collection.SharedEmoticons != null ) {
+                foreach ( BTTVEmoticon emote in collection.SharedEmoticons ) {
+                    string image = string.Format ( IMAGE_TAG_TEMPLATE, emote.GetImage () );
+                    Body = Body.Replace ( emote.Code, image );
+                }
+            }
+        }
+
+        private void OnFFZSetsLoaded ( FFZSet[] sets ) {
+            foreach ( FFZSet set in sets ) {
+                if ( set.Emoticons == null )
+                    continue;
+
+                if ( set.Emoticons.Length <= 0 )
+                    continue;
+
+                foreach ( FFZEmoticon emote in set.Emoticons ) {
+                    if ( emote.URLs == null )
+                        continue;
+
+                    if ( emote.URLs.Count <= 0 )
+                        continue;
+
+                    string image = string.Format ( IMAGE_TAG_TEMPLATE, emote.URLs.Values.ElementAt ( 0 ) );
+                    Body = Body.Replace ( emote.Name, image );
+                }
             }
         }
 
