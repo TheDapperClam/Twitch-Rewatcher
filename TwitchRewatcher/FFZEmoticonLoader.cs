@@ -17,13 +17,18 @@ namespace TwitchRewatcher {
             if ( channel == null )
                 return;
 
-            using ( HttpClient client = new HttpClient () ) {
-                client.BaseAddress = new Uri ( string.Format ( ROOM_URL, channel ) );
-                client.DefaultRequestHeaders.Accept.Add ( new MediaTypeWithQualityHeaderValue ( "application/json" ) );
-                HttpResponseMessage response = client.GetAsync ( "" ).Result;
-                string json = response.Content.ReadAsStringAsync ().Result;
-                FFZRoom room = JsonConvert.DeserializeObject<FFZRoom> ( json );
-                Sets = room.Sets.Values.ToArray ();
+            try {
+                using ( HttpClient client = new HttpClient () ) {
+                    client.BaseAddress = new Uri ( string.Format ( ROOM_URL, channel ) );
+                    client.DefaultRequestHeaders.Accept.Add ( new MediaTypeWithQualityHeaderValue ( "application/json" ) );
+                    HttpResponseMessage response = client.GetAsync ( "" ).Result;
+                    string json = response.Content.ReadAsStringAsync ().Result;
+                    FFZRoom room = JsonConvert.DeserializeObject<FFZRoom> ( json );
+                    Sets = room.Sets.Values.ToArray ();
+                }
+            } catch {
+                Sets = null;
+            } finally {
                 OnSetsLoaded?.Invoke ( Sets );
             }
         }

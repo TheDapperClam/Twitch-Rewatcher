@@ -20,24 +20,34 @@ namespace TwitchRewatcher {
             if ( channel == null )
                 return;
 
-            using ( HttpClient client = new HttpClient () ) {
-                client.BaseAddress = new Uri ( string.Format ( CHANNEL_EMOTE_URL, channel ) );
-                client.DefaultRequestHeaders.Accept.Add ( new MediaTypeWithQualityHeaderValue ( "application/json" ) );
-                HttpResponseMessage response = client.GetAsync ( "" ).Result;
-                string json = response.Content.ReadAsStringAsync ().Result;
-                ChannelEmoticons = JsonConvert.DeserializeObject<BTTVEmoticonCollection> ( json );
+            try {
+                using ( HttpClient client = new HttpClient () ) {
+                    client.BaseAddress = new Uri ( string.Format ( CHANNEL_EMOTE_URL, channel ) );
+                    client.DefaultRequestHeaders.Accept.Add ( new MediaTypeWithQualityHeaderValue ( "application/json" ) );
+                    HttpResponseMessage response = client.GetAsync ( "" ).Result;
+                    string json = response.Content.ReadAsStringAsync ().Result;
+                    ChannelEmoticons = JsonConvert.DeserializeObject<BTTVEmoticonCollection> ( json );
+                }
+            } catch {
+                ChannelEmoticons = null;
+            } finally {
                 OnChannelEmoticonsLoaded?.Invoke ( ChannelEmoticons );
             }
         }
 
         public static void LoadOfficialEmoticons () {
-            using ( HttpClient client = new HttpClient () ) {
-                client.BaseAddress = new Uri ( OFFICIAL_EMOTE_URL );
-                client.DefaultRequestHeaders.Accept.Add ( new MediaTypeWithQualityHeaderValue ( "application/json" ) );
-                HttpResponseMessage response = client.GetAsync ( "" ).Result;
-                string json = response.Content.ReadAsStringAsync ().Result;
-                OfficialEmoticons = JsonConvert.DeserializeObject<BTTVEmoticon[]> ( json );
-                OnOfficialEmoticonsLoaded?. Invoke ( OfficialEmoticons );
+            try {
+                using ( HttpClient client = new HttpClient () ) {
+                    client.BaseAddress = new Uri ( OFFICIAL_EMOTE_URL );
+                    client.DefaultRequestHeaders.Accept.Add ( new MediaTypeWithQualityHeaderValue ( "application/json" ) );
+                    HttpResponseMessage response = client.GetAsync ( "" ).Result;
+                    string json = response.Content.ReadAsStringAsync ().Result;
+                    OfficialEmoticons = JsonConvert.DeserializeObject<BTTVEmoticon[]> ( json );
+                }
+            } catch {
+                OfficialEmoticons = null;
+            } finally {
+                OnOfficialEmoticonsLoaded?.Invoke ( OfficialEmoticons );
             }
         }
     }

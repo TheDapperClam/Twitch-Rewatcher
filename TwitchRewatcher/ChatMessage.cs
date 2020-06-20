@@ -20,6 +20,9 @@ namespace TwitchRewatcher {
         }
 
         private void OnBTTVChannelEmoticonsLoaded ( BTTVEmoticonCollection collection ) {
+            if ( collection == null )
+                return;
+
             if ( collection.ChannelEmoticons != null ) {
                 foreach ( BTTVEmoticon emote in collection.ChannelEmoticons ) {
                     string image = string.Format ( IMAGE_TAG_TEMPLATE, emote.GetImage () );
@@ -36,6 +39,9 @@ namespace TwitchRewatcher {
         }
 
         private void OnFFZSetsLoaded ( FFZSet[] sets ) {
+            if ( sets == null )
+                return;
+
             foreach ( FFZSet set in sets ) {
                 if ( set.Emoticons == null )
                     continue;
