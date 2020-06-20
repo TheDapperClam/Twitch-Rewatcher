@@ -63,7 +63,6 @@ D:\TheDapperClam\Documents\Dev\Projects\C#\Twitch-Rewatcher\TwitchRewatcher\bin\
 D:\TheDapperClam\Documents\Dev\Projects\C#\Twitch-Rewatcher\TwitchRewatcher\bin\Release\Newtonsoft.Json.xml
 D:\TheDapperClam\Documents\Dev\Projects\C#\Twitch-Rewatcher\TwitchRewatcher\bin\Release\Interop.WMPLib.dll
 D:\TheDapperClam\Documents\Dev\Projects\C#\Twitch-Rewatcher\TwitchRewatcher\bin\Release\AxInterop.WMPLib.dll
-D:\TheDapperClam\Documents\Dev\Projects\C#\Twitch-Rewatcher\TwitchRewatcher\obj\Release\TwitchRewatcher.csprojAssemblyReference.cache
 D:\TheDapperClam\Documents\Dev\Projects\C#\Twitch-Rewatcher\TwitchRewatcher\obj\Release\Interop.WMPLib.dll
 D:\TheDapperClam\Documents\Dev\Projects\C#\Twitch-Rewatcher\TwitchRewatcher\obj\Release\AxInterop.WMPLib.dll
 D:\TheDapperClam\Documents\Dev\Projects\C#\Twitch-Rewatcher\TwitchRewatcher\obj\Release\TwitchRewatcher.csproj.ResolveComReference.cache
@@ -240,3 +239,4 @@ D:\TheDapperClam\Documents\Dev\Projects\C#\Twitch-Rewatcher\TwitchRewatcher\bin\
 D:\TheDapperClam\Documents\Dev\Projects\C#\Twitch-Rewatcher\TwitchRewatcher\bin\Release\x64\CefSharp.WinForms.dll
 D:\TheDapperClam\Documents\Dev\Projects\C#\Twitch-Rewatcher\TwitchRewatcher\bin\Release\x64\CefSharp.WinForms.pdb
 D:\TheDapperClam\Documents\Dev\Projects\C#\Twitch-Rewatcher\TwitchRewatcher\bin\Release\x64\CefSharp.WinForms.XML
+D:\TheDapperClam\Documents\Dev\Projects\C#\Twitch-Rewatcher\TwitchRewatcher\obj\Release\TwitchRewatcher.csprojAssemblyReference.cache

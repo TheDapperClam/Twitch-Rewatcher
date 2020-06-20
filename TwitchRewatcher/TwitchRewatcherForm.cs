@@ -456,7 +456,7 @@ namespace TwitchRewatcher {
 
         private void exitToolStripMenuItem_Click ( object sender, EventArgs e ) {
             minimizeOnClose = false;
-            this.Close ();
+            Close ();
         }
 
         private void showToolStripMenuItem_Click ( object sender, EventArgs e ) {

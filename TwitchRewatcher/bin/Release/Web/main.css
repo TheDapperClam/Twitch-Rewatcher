@@ -37,7 +37,8 @@ body {
 
 .timeStamp {
 	font-size: smaller;
-	color: gray;
+	display: block;
+	color: silver;
 }
 
 li {

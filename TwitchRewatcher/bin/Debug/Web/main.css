@@ -15,8 +15,7 @@ body {
 }
 
 .emote {
-    vertical-align: middle;
-    text-align: center;
+	vertical-align: middle;
 }
 
 .noBulletPoints {
@@ -36,11 +35,20 @@ body {
 }
 
 .timeStamp {
+	vertical-align: middle;
+	float: left;
 	font-size: smaller;
-	color: gray;
+	color: silver;
+	margin: 0 8px 0 0;
+}
+
+.messageBody {
+	overflow: hidden;
 }
 
 li {
+	display: flex;
+	align-items: baseline;
     padding: 0;
     margin: 0 0 16px 0;
 }

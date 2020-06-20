@@ -122,7 +122,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StreamConfigManager.cs" />
     <Compile Include="VideoConfig.cs" />
-    <Compile Include="VideoFrameExtractor.cs" />
     <Compile Include="VodDownloadEntry.cs" />
     <Compile Include="VodDownloader.cs" />
     <EmbeddedResource Include="DownloadVodForm.resx">
