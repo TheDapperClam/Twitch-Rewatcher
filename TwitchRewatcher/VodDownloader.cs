@@ -17,11 +17,13 @@ namespace TwitchRewatcher {
         public static bool IsDownloadingChat { get { return reChatToolProcess != null; } }
 
         private static Process youtubeDlProcess = null;
+        private static Process youtubeDlUpdateProcess = null;
         private static Process reChatToolProcess = null;
 
         public delegate void VodEventHandler ();
         public static event VodEventHandler OnDownloadFinished;
         public static event VodEventHandler OnDownloadProgress;
+        public static event VodEventHandler OnYoutubeDLUpdated;
 
         private static void ChatDataRecieved ( object sender, DataReceivedEventArgs e ) {
             OnDownloadProgress?.Invoke ();
@@ -107,6 +109,16 @@ namespace TwitchRewatcher {
             return total;
         }
 
+        public static void UpdateYoutubeDL () {
+            ProcessStartInfo youtubeDlUpdateInfo = new ProcessStartInfo ( Path.Combine ( Environment.CurrentDirectory, YOUTUBE_DL_PATH ) );
+            youtubeDlUpdateInfo.UseShellExecute = false;
+            youtubeDlUpdateInfo.CreateNoWindow = true;
+            youtubeDlUpdateInfo.Arguments = "-U";
+            youtubeDlUpdateProcess = Process.Start ( youtubeDlUpdateInfo );
+            youtubeDlUpdateProcess.EnableRaisingEvents = true;
+            youtubeDlUpdateProcess.Exited += new EventHandler ( YoutubeDLUpdateFinished );
+        }
+
         private static void VideoDataRecieved ( object sender, DataReceivedEventArgs e ) {
             if ( string.IsNullOrWhiteSpace ( e.Data ) )
                 return;
@@ -114,8 +126,7 @@ namespace TwitchRewatcher {
             string data = e.Data.Replace ( " ", "" );
             Regex r = new Regex ( "](.+?)%" );
             string match = r.Match ( data ).Groups[ 1 ].Value;
-            float progress = 0.0f;
-            float.TryParse ( match, out progress );
+            float.TryParse ( match, out float progress );
             VideoDownloadProgress = progress;
             OnDownloadProgress?.Invoke ();
         }
@@ -125,6 +136,12 @@ namespace TwitchRewatcher {
             youtubeDlProcess = null;
             CheckDownloadFinished ();
             OnDownloadProgress?.Invoke ();
+        }
+
+        private static void YoutubeDLUpdateFinished ( object sender, EventArgs e ) {
+            youtubeDlUpdateProcess.Dispose ();
+            youtubeDlUpdateProcess = null;
+            OnYoutubeDLUpdated?.Invoke ();
         }
     }
 }

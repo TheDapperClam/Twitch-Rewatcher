@@ -28,6 +28,9 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TwitchRewatcherForm));
             this.optionsPanel = new System.Windows.Forms.Panel();
+            this.aboutButton = new System.Windows.Forms.Button();
+            this.openStreamButton = new System.Windows.Forms.Button();
+            this.downloadVodButton = new System.Windows.Forms.Button();
             this.playbackCheckTimer = new System.Windows.Forms.Timer(this.components);
             this.autoSaveTimer = new System.Windows.Forms.Timer(this.components);
             this.twitchRewatcherToolTip = new System.Windows.Forms.ToolTip(this.components);
@@ -36,6 +39,9 @@
             this.currentTimeLabel = new System.Windows.Forms.Label();
             this.maxTimeLabel = new System.Windows.Forms.Label();
             this.toggleChatButton = new System.Windows.Forms.Button();
+            this.playButton = new System.Windows.Forms.Button();
+            this.theaterModeButton = new System.Windows.Forms.Button();
+            this.soundButton = new System.Windows.Forms.Button();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.notifyIconContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.showToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -44,12 +50,6 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.controlPanel = new System.Windows.Forms.Panel();
             this.hideMouseMoveControlsTimer = new System.Windows.Forms.Timer(this.components);
-            this.playButton = new System.Windows.Forms.Button();
-            this.theaterModeButton = new System.Windows.Forms.Button();
-            this.soundButton = new System.Windows.Forms.Button();
-            this.aboutButton = new System.Windows.Forms.Button();
-            this.openStreamButton = new System.Windows.Forms.Button();
-            this.downloadVodButton = new System.Windows.Forms.Button();
             this.optionsPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.playbackTimeTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.volumeTrackBar)).BeginInit();
@@ -70,6 +70,64 @@
             this.optionsPanel.Name = "optionsPanel";
             this.optionsPanel.Size = new System.Drawing.Size(48, 572);
             this.optionsPanel.TabIndex = 2;
+            // 
+            // aboutButton
+            // 
+            this.aboutButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.aboutButton.BackColor = System.Drawing.Color.White;
+            this.aboutButton.BackgroundImage = global::TwitchRewatcher.Properties.Resources.About;
+            this.aboutButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.aboutButton.FlatAppearance.BorderSize = 0;
+            this.aboutButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.aboutButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
+            this.aboutButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.aboutButton.Location = new System.Drawing.Point(0, 110);
+            this.aboutButton.Name = "aboutButton";
+            this.aboutButton.Size = new System.Drawing.Size(48, 48);
+            this.aboutButton.TabIndex = 3;
+            this.twitchRewatcherToolTip.SetToolTip(this.aboutButton, "About");
+            this.aboutButton.UseVisualStyleBackColor = false;
+            this.aboutButton.Click += new System.EventHandler(this.aboutButton_Click);
+            // 
+            // openStreamButton
+            // 
+            this.openStreamButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.openStreamButton.BackColor = System.Drawing.Color.White;
+            this.openStreamButton.BackgroundImage = global::TwitchRewatcher.Properties.Resources.OpenStream;
+            this.openStreamButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.openStreamButton.FlatAppearance.BorderSize = 0;
+            this.openStreamButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.openStreamButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
+            this.openStreamButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.openStreamButton.Location = new System.Drawing.Point(0, 61);
+            this.openStreamButton.Name = "openStreamButton";
+            this.openStreamButton.Size = new System.Drawing.Size(48, 48);
+            this.openStreamButton.TabIndex = 1;
+            this.twitchRewatcherToolTip.SetToolTip(this.openStreamButton, "Open");
+            this.openStreamButton.UseVisualStyleBackColor = false;
+            this.openStreamButton.Click += new System.EventHandler(this.openStreamButton_Click);
+            // 
+            // downloadVodButton
+            // 
+            this.downloadVodButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.downloadVodButton.BackColor = System.Drawing.Color.White;
+            this.downloadVodButton.BackgroundImage = global::TwitchRewatcher.Properties.Resources.DownloadVod;
+            this.downloadVodButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.downloadVodButton.FlatAppearance.BorderColor = System.Drawing.Color.DarkRed;
+            this.downloadVodButton.FlatAppearance.BorderSize = 0;
+            this.downloadVodButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.downloadVodButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
+            this.downloadVodButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.downloadVodButton.Location = new System.Drawing.Point(0, 12);
+            this.downloadVodButton.Name = "downloadVodButton";
+            this.downloadVodButton.Size = new System.Drawing.Size(48, 48);
+            this.downloadVodButton.TabIndex = 0;
+            this.twitchRewatcherToolTip.SetToolTip(this.downloadVodButton, "Download");
+            this.downloadVodButton.UseVisualStyleBackColor = false;
+            this.downloadVodButton.Click += new System.EventHandler(this.downloadVodButton_Click);
             // 
             // playbackCheckTimer
             // 
@@ -155,6 +213,64 @@
             this.toggleChatButton.UseVisualStyleBackColor = true;
             this.toggleChatButton.Click += new System.EventHandler(this.toggleChatButton_Click);
             // 
+            // playButton
+            // 
+            this.playButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.playButton.BackColor = System.Drawing.Color.Transparent;
+            this.playButton.BackgroundImage = global::TwitchRewatcher.Properties.Resources.PlayButton;
+            this.playButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.playButton.FlatAppearance.BorderSize = 0;
+            this.playButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.playButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
+            this.playButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.playButton.ForeColor = System.Drawing.Color.White;
+            this.playButton.Location = new System.Drawing.Point(6, 44);
+            this.playButton.Name = "playButton";
+            this.playButton.Size = new System.Drawing.Size(32, 32);
+            this.playButton.TabIndex = 4;
+            this.twitchRewatcherToolTip.SetToolTip(this.playButton, "Toggle Play State");
+            this.playButton.UseVisualStyleBackColor = false;
+            this.playButton.Click += new System.EventHandler(this.playButton_Click);
+            // 
+            // theaterModeButton
+            // 
+            this.theaterModeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.theaterModeButton.BackColor = System.Drawing.Color.Transparent;
+            this.theaterModeButton.BackgroundImage = global::TwitchRewatcher.Properties.Resources.TheaterModeButton;
+            this.theaterModeButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.theaterModeButton.FlatAppearance.BorderSize = 0;
+            this.theaterModeButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.theaterModeButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
+            this.theaterModeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.theaterModeButton.ForeColor = System.Drawing.Color.White;
+            this.theaterModeButton.Location = new System.Drawing.Point(970, 44);
+            this.theaterModeButton.Name = "theaterModeButton";
+            this.theaterModeButton.Size = new System.Drawing.Size(32, 32);
+            this.theaterModeButton.TabIndex = 9;
+            this.theaterModeButton.Text = "Theater";
+            this.twitchRewatcherToolTip.SetToolTip(this.theaterModeButton, "Toggle Theater Mode");
+            this.theaterModeButton.UseVisualStyleBackColor = false;
+            this.theaterModeButton.Click += new System.EventHandler(this.theaterModeButton_Click);
+            // 
+            // soundButton
+            // 
+            this.soundButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.soundButton.BackColor = System.Drawing.Color.Transparent;
+            this.soundButton.BackgroundImage = global::TwitchRewatcher.Properties.Resources.SoundButton;
+            this.soundButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.soundButton.FlatAppearance.BorderSize = 0;
+            this.soundButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.soundButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
+            this.soundButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.soundButton.ForeColor = System.Drawing.Color.White;
+            this.soundButton.Location = new System.Drawing.Point(44, 44);
+            this.soundButton.Name = "soundButton";
+            this.soundButton.Size = new System.Drawing.Size(32, 32);
+            this.soundButton.TabIndex = 7;
+            this.twitchRewatcherToolTip.SetToolTip(this.soundButton, "Toggle Mute");
+            this.soundButton.UseVisualStyleBackColor = false;
+            this.soundButton.Click += new System.EventHandler(this.soundButton_Click);
+            // 
             // notifyIcon
             // 
             this.notifyIcon.BalloonTipText = "Twitch Rewatcher is still running in the background. To close, right click the tr" +
@@ -235,122 +351,6 @@
             this.hideMouseMoveControlsTimer.Enabled = true;
             this.hideMouseMoveControlsTimer.Interval = 5000;
             this.hideMouseMoveControlsTimer.Tick += new System.EventHandler(this.hideMouseMoveControlsTimer_Tick);
-            // 
-            // playButton
-            // 
-            this.playButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.playButton.BackColor = System.Drawing.Color.Transparent;
-            this.playButton.BackgroundImage = global::TwitchRewatcher.Properties.Resources.PlayButton;
-            this.playButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.playButton.FlatAppearance.BorderSize = 0;
-            this.playButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.playButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
-            this.playButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.playButton.ForeColor = System.Drawing.Color.White;
-            this.playButton.Location = new System.Drawing.Point(6, 44);
-            this.playButton.Name = "playButton";
-            this.playButton.Size = new System.Drawing.Size(32, 32);
-            this.playButton.TabIndex = 4;
-            this.twitchRewatcherToolTip.SetToolTip(this.playButton, "Toggle Play State");
-            this.playButton.UseVisualStyleBackColor = false;
-            this.playButton.Click += new System.EventHandler(this.playButton_Click);
-            // 
-            // theaterModeButton
-            // 
-            this.theaterModeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.theaterModeButton.BackColor = System.Drawing.Color.Transparent;
-            this.theaterModeButton.BackgroundImage = global::TwitchRewatcher.Properties.Resources.TheaterModeButton;
-            this.theaterModeButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.theaterModeButton.FlatAppearance.BorderSize = 0;
-            this.theaterModeButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.theaterModeButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
-            this.theaterModeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.theaterModeButton.ForeColor = System.Drawing.Color.White;
-            this.theaterModeButton.Location = new System.Drawing.Point(970, 44);
-            this.theaterModeButton.Name = "theaterModeButton";
-            this.theaterModeButton.Size = new System.Drawing.Size(32, 32);
-            this.theaterModeButton.TabIndex = 9;
-            this.theaterModeButton.Text = "Theater";
-            this.twitchRewatcherToolTip.SetToolTip(this.theaterModeButton, "Toggle Theater Mode");
-            this.theaterModeButton.UseVisualStyleBackColor = false;
-            this.theaterModeButton.Click += new System.EventHandler(this.theaterModeButton_Click);
-            // 
-            // soundButton
-            // 
-            this.soundButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.soundButton.BackColor = System.Drawing.Color.Transparent;
-            this.soundButton.BackgroundImage = global::TwitchRewatcher.Properties.Resources.SoundButton;
-            this.soundButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.soundButton.FlatAppearance.BorderSize = 0;
-            this.soundButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.soundButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
-            this.soundButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.soundButton.ForeColor = System.Drawing.Color.White;
-            this.soundButton.Location = new System.Drawing.Point(44, 44);
-            this.soundButton.Name = "soundButton";
-            this.soundButton.Size = new System.Drawing.Size(32, 32);
-            this.soundButton.TabIndex = 7;
-            this.twitchRewatcherToolTip.SetToolTip(this.soundButton, "Toggle Mute");
-            this.soundButton.UseVisualStyleBackColor = false;
-            this.soundButton.Click += new System.EventHandler(this.soundButton_Click);
-            // 
-            // aboutButton
-            // 
-            this.aboutButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.aboutButton.BackColor = System.Drawing.Color.White;
-            this.aboutButton.BackgroundImage = global::TwitchRewatcher.Properties.Resources.About;
-            this.aboutButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.aboutButton.FlatAppearance.BorderSize = 0;
-            this.aboutButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.aboutButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
-            this.aboutButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.aboutButton.Location = new System.Drawing.Point(0, 110);
-            this.aboutButton.Name = "aboutButton";
-            this.aboutButton.Size = new System.Drawing.Size(48, 48);
-            this.aboutButton.TabIndex = 3;
-            this.twitchRewatcherToolTip.SetToolTip(this.aboutButton, "About Twitch Rewatcher");
-            this.aboutButton.UseVisualStyleBackColor = false;
-            this.aboutButton.Click += new System.EventHandler(this.aboutButton_Click);
-            // 
-            // openStreamButton
-            // 
-            this.openStreamButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.openStreamButton.BackColor = System.Drawing.Color.White;
-            this.openStreamButton.BackgroundImage = global::TwitchRewatcher.Properties.Resources.OpenStream;
-            this.openStreamButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.openStreamButton.FlatAppearance.BorderSize = 0;
-            this.openStreamButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.openStreamButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
-            this.openStreamButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.openStreamButton.Location = new System.Drawing.Point(0, 61);
-            this.openStreamButton.Name = "openStreamButton";
-            this.openStreamButton.Size = new System.Drawing.Size(48, 48);
-            this.openStreamButton.TabIndex = 1;
-            this.twitchRewatcherToolTip.SetToolTip(this.openStreamButton, "Open Stream");
-            this.openStreamButton.UseVisualStyleBackColor = false;
-            this.openStreamButton.Click += new System.EventHandler(this.openStreamButton_Click);
-            // 
-            // downloadVodButton
-            // 
-            this.downloadVodButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.downloadVodButton.BackColor = System.Drawing.Color.White;
-            this.downloadVodButton.BackgroundImage = global::TwitchRewatcher.Properties.Resources.DownloadVod;
-            this.downloadVodButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.downloadVodButton.FlatAppearance.BorderColor = System.Drawing.Color.DarkRed;
-            this.downloadVodButton.FlatAppearance.BorderSize = 0;
-            this.downloadVodButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.downloadVodButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
-            this.downloadVodButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.downloadVodButton.Location = new System.Drawing.Point(0, 12);
-            this.downloadVodButton.Name = "downloadVodButton";
-            this.downloadVodButton.Size = new System.Drawing.Size(48, 48);
-            this.downloadVodButton.TabIndex = 0;
-            this.twitchRewatcherToolTip.SetToolTip(this.downloadVodButton, "Download Stream");
-            this.downloadVodButton.UseVisualStyleBackColor = false;
-            this.downloadVodButton.Click += new System.EventHandler(this.downloadVodButton_Click);
             // 
             // TwitchRewatcherForm
             // 
