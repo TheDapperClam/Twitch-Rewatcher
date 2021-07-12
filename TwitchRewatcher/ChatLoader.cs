@@ -16,6 +16,7 @@ namespace TwitchRewatcher {
 
                 if ( chatObjs != null && chatObjs.Length > 0 ) {
                     string channel = chatObjs[ 0 ].ChannelID;
+                    TwitchBadgeLoader.LoadChannelBadges ( channel );
                     BTTVEmoticonLoader.LoadChannelEmoticons ( channel );
                     FFZEmoticonLoader.LoadChannelSets ( channel );
                 }

@@ -5,7 +5,9 @@ using System.Runtime.Serialization;
 namespace TwitchRewatcher {
     public class ChatObject
     {
-        private const string BODY_TEMPLATE = "<li><span class='timeStamp'>{0}</span><div class='messageBody'><span style='color:{1}'><b>{2}</b></span>: {3}</div></li>";
+        public const string BADGES_SPAN_INDEX = "[BADGES]";
+
+        private const string BODY_TEMPLATE = "<li><span class='timeStamp'>{0}</span><div class='messageBody'><span>{1}</span><span style='color:{2}'><b>{3}</b></span>: {4}</div></li>";
 
         [JsonProperty( "channel_id" )]
         public string ChannelID { get; set; }
@@ -23,7 +25,7 @@ namespace TwitchRewatcher {
                 t.Hours > 0 ? t.Hours.ToString () + ":" : "",
                 t.Hours > 0 && t.Minutes < 10 ? "0" + t.Minutes.ToString () + ":" : t.Minutes.ToString () + ":" ,
                 t.Seconds < 10 ? "0" + t.Seconds.ToString () : t.Seconds.ToString () );
-            Message.Body = string.Format ( BODY_TEMPLATE, timeStamp, Message.Color, Commenter.DisplayName, Message.Body );
+            Message.Body = string.Format ( BODY_TEMPLATE, timeStamp, BADGES_SPAN_INDEX, Message.Color, Commenter.DisplayName, Message.Body );
         }
     }
 }

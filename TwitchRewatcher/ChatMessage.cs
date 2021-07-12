@@ -5,7 +5,8 @@ using System.Runtime.Serialization;
 namespace TwitchRewatcher {
     public class ChatMessage
     {
-        private const string IMAGE_TAG_TEMPLATE = "<img class='emote' src='{0}' />";
+        private const string TAG_EMOTE = "<img class='emote' src='{0}' />";
+        private const string TAG_BADGE = "<img class='badge' src={0} />";
 
         [JsonProperty( "body" )]
         public string Body { get; set; }
@@ -13,10 +14,13 @@ namespace TwitchRewatcher {
         public string Color { get; set; }
         [JsonProperty ( "emoticons" )]
         public TwitchEmoticon[] Emoticons { get; set; }
+        [JsonProperty("user_badges")]
+        public ChatUserBadge[] UserBadges { get; set; }
 
         public ChatMessage () {
-            BTTVEmoticonLoader.OnChannelEmoticonsLoaded += new BTTVEmoticonLoader.BTTVCollectionEventHandler ( OnBTTVChannelEmoticonsLoaded );
-            FFZEmoticonLoader.OnSetsLoaded += new FFZEmoticonLoader.FFZSetEventHandler ( OnFFZSetsLoaded );
+            TwitchBadgeLoader.OnChannelBadgesLoaded += OnChannelBadgesLoaded;
+            BTTVEmoticonLoader.OnChannelEmoticonsLoaded += OnBTTVChannelEmoticonsLoaded;
+            FFZEmoticonLoader.OnSetsLoaded += OnFFZSetsLoaded;
         }
 
         private void OnBTTVChannelEmoticonsLoaded ( BTTVEmoticonCollection collection ) {
@@ -25,17 +29,33 @@ namespace TwitchRewatcher {
 
             if ( collection.ChannelEmoticons != null ) {
                 foreach ( BTTVEmoticon emote in collection.ChannelEmoticons ) {
-                    string image = string.Format ( IMAGE_TAG_TEMPLATE, emote.GetImage () );
+                    string image = string.Format ( TAG_EMOTE, emote.GetImage () );
                     Body = Body.Replace ( emote.Code, image );
                 }
             }
 
             if ( collection.SharedEmoticons != null ) {
                 foreach ( BTTVEmoticon emote in collection.SharedEmoticons ) {
-                    string image = string.Format ( IMAGE_TAG_TEMPLATE, emote.GetImage () );
+                    string image = string.Format ( TAG_EMOTE, emote.GetImage () );
                     Body = Body.Replace ( emote.Code, image );
                 }
             }
+        }
+
+        private void OnChannelBadgesLoaded () {
+            string badges = "";
+            if ( UserBadges != null ) {
+                foreach ( ChatUserBadge badge in UserBadges ) {
+                    if ( TwitchBadgeLoader.ChannelBadgeSets.BadgeSets != null && TwitchBadgeLoader.ChannelBadgeSets.DoesSetHaveBadge ( badge.ID, badge.Version ) ) {
+                        string image = string.Format ( TAG_BADGE, TwitchBadgeLoader.ChannelBadgeSets.BadgeSets[ badge.ID ].Versions[ badge.Version ].Image );
+                        badges += image;
+                    } else if ( TwitchBadgeLoader.GlobalBadgeSets.BadgeSets != null ) {
+                        string image = string.Format ( TAG_BADGE, TwitchBadgeLoader.GlobalBadgeSets.BadgeSets[ badge.ID ].Versions[ badge.Version ].Image );
+                        badges += image;
+                    }
+                }
+            }
+            Body = Body.Replace ( ChatObject.BADGES_SPAN_INDEX, badges );
         }
 
         private void OnFFZSetsLoaded ( FFZSet[] sets ) {
@@ -56,7 +76,7 @@ namespace TwitchRewatcher {
                     if ( emote.URLs.Count <= 0 )
                         continue;
 
-                    string image = string.Format ( IMAGE_TAG_TEMPLATE, emote.URLs.Values.ElementAt ( 0 ) );
+                    string image = string.Format ( TAG_EMOTE, emote.URLs.Values.ElementAt ( 0 ) );
                     Body = Body.Replace ( emote.Name, image );
                 }
             }
@@ -67,7 +87,7 @@ namespace TwitchRewatcher {
             if ( Emoticons != null ) {
                 int offset = 0;
                 foreach ( TwitchEmoticon emote in Emoticons ) {
-                    string image = string.Format ( IMAGE_TAG_TEMPLATE, emote.GetImage () );
+                    string image = string.Format ( TAG_EMOTE, emote.GetImage () );
                     int length = emote.End + 1 - emote.Begin;
                     Body = Body.Remove ( emote.Begin + offset, length );
                     Body = Body.Insert ( emote.Begin + offset, image );
@@ -77,7 +97,7 @@ namespace TwitchRewatcher {
 
             if ( BTTVEmoticonLoader.OfficialEmoticons != null ) {
                 foreach ( BTTVEmoticon emote in BTTVEmoticonLoader.OfficialEmoticons ) {
-                    string image = string.Format ( IMAGE_TAG_TEMPLATE, emote.GetImage () );
+                    string image = string.Format ( TAG_EMOTE, emote.GetImage () );
                     Body = Body.Replace ( emote.Code, image );
                 }
             }

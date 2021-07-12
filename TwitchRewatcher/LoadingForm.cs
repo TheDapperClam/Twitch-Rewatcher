@@ -5,7 +5,7 @@ using System.Windows.Forms;
 namespace TwitchRewatcher {
     public partial class LoadingForm : Form {
         private TwitchRewatcherForm rewatcherForm = new TwitchRewatcherForm ();
-        private int loadCount = 2;
+        private int loadCount = 3;
 
         private void LoadFinished () {
             loadCount--;
@@ -17,8 +17,13 @@ namespace TwitchRewatcher {
             } ) );
         }
 
-        private void OnOfficitalEmoticonsLoaded ( BTTVEmoticon[] emoticons ) {
+        private void OnBTTVEmoticonsLoaded ( BTTVEmoticon[] emoticons ) {
             Debug.WriteLine ( "Loaded official emoticons" );
+            LoadFinished ();
+        }
+
+        private void OnTwitchBadgesLoaded () {
+            Debug.WriteLine ( "Twitch badges loaded" );
             LoadFinished ();
         }
 
@@ -32,8 +37,9 @@ namespace TwitchRewatcher {
         }
 
         private void LoadingForm_Load ( object sender, EventArgs e ) {
-            VodDownloader.OnYoutubeDLUpdated += new VodDownloader.VodEventHandler ( OnYoutubeDLUpdated );
-            BTTVEmoticonLoader.OnOfficialEmoticonsLoaded += new BTTVEmoticonLoader.BTTVEmoticonEventHandler ( OnOfficitalEmoticonsLoaded );
+            VodDownloader.OnYoutubeDLUpdated += OnYoutubeDLUpdated;
+            TwitchBadgeLoader.OnGlobalBadgesLoaded += OnTwitchBadgesLoaded;
+            BTTVEmoticonLoader.OnOfficialEmoticonsLoaded += OnBTTVEmoticonsLoaded;
         }
 
         private void LoadingForm_FormClosing ( object sender, FormClosingEventArgs e ) {
@@ -42,6 +48,7 @@ namespace TwitchRewatcher {
 
         private void LoadingForm_Shown ( object sender, EventArgs e ) {
             VodDownloader.UpdateYoutubeDL ();
+            TwitchBadgeLoader.LoadGlobalBadges ();
             BTTVEmoticonLoader.LoadOfficialEmoticons ();
         }
     }

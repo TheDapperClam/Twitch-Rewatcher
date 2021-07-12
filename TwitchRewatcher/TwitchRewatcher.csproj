@@ -97,6 +97,7 @@
     <Compile Include="ChatLoader.cs" />
     <Compile Include="ChatMessage.cs" />
     <Compile Include="ChatObject.cs" />
+    <Compile Include="ChatUserBadge.cs" />
     <Compile Include="DownloadVodForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -113,6 +114,10 @@
     <Compile Include="LoadingForm.Designer.cs">
       <DependentUpon>LoadingForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="TwitchBadge.cs" />
+    <Compile Include="TwitchBadgeLoader.cs" />
+    <Compile Include="TwitchBadgeSet.cs" />
+    <Compile Include="TwitchBadgeSetCollection.cs" />
     <Compile Include="TwitchEmoticon.cs" />
     <Compile Include="TwitchRewatcherForm.cs">
       <SubType>Form</SubType>
