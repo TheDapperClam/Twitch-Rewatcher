@@ -85,13 +85,18 @@ namespace TwitchRewatcher {
         [OnDeserialized]
         private void OnDeserialized ( StreamingContext context ) {
             if ( Emoticons != null ) {
+                string oldBody = Body;
                 int offset = 0;
-                foreach ( TwitchEmoticon emote in Emoticons ) {
-                    string image = string.Format ( TAG_EMOTE, emote.GetImage () );
-                    int length = emote.End + 1 - emote.Begin;
-                    Body = Body.Remove ( emote.Begin + offset, length );
-                    Body = Body.Insert ( emote.Begin + offset, image );
-                    offset += image.Length - length;
+                try {
+                    foreach ( TwitchEmoticon emote in Emoticons ) {
+                        string image = string.Format ( TAG_EMOTE, emote.GetImage () );
+                        int length = emote.End - emote.Begin + 1;
+                        Body = Body.Remove ( emote.Begin + offset, length );
+                        Body = Body.Insert ( emote.Begin + offset, image );
+                        offset += image.Length - length;
+                    }
+                } catch {
+                    Body = oldBody;
                 }
             }
 
