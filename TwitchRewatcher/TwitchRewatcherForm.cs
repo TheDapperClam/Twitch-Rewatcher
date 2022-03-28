@@ -13,8 +13,7 @@ namespace TwitchRewatcher {
         Theater,
     }
 
-    public partial class TwitchRewatcherForm : Form, IMessageFilter
-    {
+    public partial class TwitchRewatcherForm : Form, IMessageFilter {
         public delegate void MouseMovedEvent ();
         public event MouseMovedEvent GlobalMouseMove;
 
@@ -55,7 +54,7 @@ namespace TwitchRewatcher {
         private DownloadVodForm downloadForm = new DownloadVodForm ();
 
         private bool cursorVisible = true;
-        private bool CursorVisible  {
+        private bool CursorVisible {
             get { return cursorVisible; }
             set {
                 if ( value == cursorVisible )
@@ -97,7 +96,7 @@ namespace TwitchRewatcher {
 
         private void InitializeChatWebBrowser () {
             CefSettings settings = new CefSettings ();
-            settings.RegisterScheme ( new CefCustomScheme { 
+            settings.RegisterScheme ( new CefCustomScheme {
                 SchemeName = "localfolder",
                 DomainName = "cefsharp",
                 SchemeHandlerFactory = new FolderSchemeHandlerFactory (
@@ -148,6 +147,7 @@ namespace TwitchRewatcher {
 
             currentVideoPath = path;
             videoPlayer.URL = path;
+            SetMuteState ( false );
             SetPlaybackTime ( 0 );
         }
 
@@ -283,23 +283,23 @@ namespace TwitchRewatcher {
         private void SetVideoMode ( VideoMode mode ) {
             currentVideoMode = mode;
             switch ( currentVideoMode ) {
-                case VideoMode.Normal:
-                    FormBorderStyle = FormBorderStyle.Sizable;
-                    WindowState = isMaximized ? FormWindowState.Maximized : FormWindowState.Normal;
-                    Bounds = oldBounds;
-                    break;
-                case VideoMode.Theater:
-                    isMaximized = WindowState == FormWindowState.Maximized;
-                    oldBounds = RestoreBounds;
-                    FormBorderStyle = FormBorderStyle.None;
-                    WindowState = FormWindowState.Normal;
-                    Bounds = Screen.FromControl ( this ).Bounds;
-                    SetMouseMoveControlVisibility ( false );
-                    break;
+            case VideoMode.Normal:
+                FormBorderStyle = FormBorderStyle.Sizable;
+                WindowState = isMaximized ? FormWindowState.Maximized : FormWindowState.Normal;
+                Bounds = oldBounds;
+                break;
+            case VideoMode.Theater:
+                isMaximized = WindowState == FormWindowState.Maximized;
+                oldBounds = RestoreBounds;
+                FormBorderStyle = FormBorderStyle.None;
+                WindowState = FormWindowState.Normal;
+                Bounds = Screen.FromControl ( this ).Bounds;
+                SetMouseMoveControlVisibility ( false );
+                break;
             }
         }
 
-        private void UpdateChatMessages() {
+        private void UpdateChatMessages () {
             if ( chatMessages == null )
                 return;
 
@@ -321,29 +321,29 @@ namespace TwitchRewatcher {
             SetPlaybackTrackBar ( playbackTime );
         }
 
-        public TwitchRewatcherForm() {
+        public TwitchRewatcherForm () {
             InitializeComponent ();
             InitializeChatWebBrowser ();
             GlobalMouseMove += new MouseMovedEvent ( OnGlobalMouseMove );
             Application.AddMessageFilter ( this );
         }
 
-        private void videoPlayer_PlayStateChange( object sender, AxWMPLib._WMPOCXEvents_PlayStateChangeEvent e ) {
+        private void videoPlayer_PlayStateChange ( object sender, AxWMPLib._WMPOCXEvents_PlayStateChangeEvent e ) {
             playButton.BackgroundImage = IsPlaying () ? Properties.Resources.PauseButton : Properties.Resources.PlayButton;
         }
 
-        private void playButton_Click( object sender, EventArgs e ) {
+        private void playButton_Click ( object sender, EventArgs e ) {
             if ( videoPlayer.Ctlcontrols.currentPosition == 0.0f )
                 ResetChat ();
 
             SetPauseState ( IsPlaying () );
         }
 
-        private void videoPlayer_PositionChange( object sender, AxWMPLib._WMPOCXEvents_PositionChangeEvent e ) {
+        private void videoPlayer_PositionChange ( object sender, AxWMPLib._WMPOCXEvents_PositionChangeEvent e ) {
             UpdateVideoControls ();
         }
 
-        private void videoPlayer_MediaChange( object sender, AxWMPLib._WMPOCXEvents_MediaChangeEvent e ) {
+        private void videoPlayer_MediaChange ( object sender, AxWMPLib._WMPOCXEvents_MediaChangeEvent e ) {
             bool isMediaAvailable = IsVideoLoaded ();
             double maxDurationDouble = isMediaAvailable ? videoPlayer.currentMedia.duration : 0;
             string maxDurationString = isMediaAvailable ? videoPlayer.currentMedia.durationString : "00:00:00";
@@ -352,16 +352,16 @@ namespace TwitchRewatcher {
             playbackTimeTrackBar.Maximum = (int) maxDurationDouble;
         }
 
-        private void playbackTimeTrackBar_MouseUp( object sender, MouseEventArgs e ) {
+        private void playbackTimeTrackBar_MouseUp ( object sender, MouseEventArgs e ) {
             SetPlaybackTime ( playbackTimeTrackBar.Value );
             playbackCheckTimer.Enabled = true;
         }
 
-        private void videoPlayer_MouseUpEvent( object sender, AxWMPLib._WMPOCXEvents_MouseUpEvent e ) {
+        private void videoPlayer_MouseUpEvent ( object sender, AxWMPLib._WMPOCXEvents_MouseUpEvent e ) {
             SetPauseState ( IsPlaying () );
         }
 
-        private void playbackCheckTimer_Tick( object sender, EventArgs e ) {
+        private void playbackCheckTimer_Tick ( object sender, EventArgs e ) {
             if ( IsVideoLoaded () && GetPlaybackTime () < bufferedPlaybackTime )
                 SetPlaybackTime ( bufferedPlaybackTime );
             else
@@ -371,21 +371,21 @@ namespace TwitchRewatcher {
             UpdateChatMessages ();
         }
 
-        private void playbackTimeTrackBar_Scroll( object sender, EventArgs e ) {
+        private void playbackTimeTrackBar_Scroll ( object sender, EventArgs e ) {
             SetPlaybackTimeLabel ( playbackTimeTrackBar.Value );
         }
 
-        private void playbackTimeTrackBar_MouseDown( object sender, MouseEventArgs e ) {
+        private void playbackTimeTrackBar_MouseDown ( object sender, MouseEventArgs e ) {
             playbackCheckTimer.Enabled = false;
         }
 
-        private void TwitchRewatcherForm_Load( object sender, EventArgs e ) {
+        private void TwitchRewatcherForm_Load ( object sender, EventArgs e ) {
             oldCursorPosition = Cursor.Position;
-            playbackTimeTrackBar.MouseWheel += (a, b) => ( (HandledMouseEventArgs) b ).Handled = true;
+            playbackTimeTrackBar.MouseWheel += ( a, b ) => ( (HandledMouseEventArgs) b ).Handled = true;
             volumeTrackBar.Value = videoPlayer.settings.volume;
         }
 
-        private void TwitchRewatcherForm_FormClosing( object sender, FormClosingEventArgs e ) {
+        private void TwitchRewatcherForm_FormClosing ( object sender, FormClosingEventArgs e ) {
             if ( minimizeOnClose ) {
                 e.Cancel = true;
                 MinimizeToTray ();
@@ -428,6 +428,7 @@ namespace TwitchRewatcher {
                 if ( dialog.ShowDialog () != CommonFileDialogResult.Ok )
                     return;
 
+                Cursor.Current = Cursors.WaitCursor;
                 currentStreamPath = dialog.FileName;
                 string video = Path.Combine ( currentStreamPath, VIDEO_FILE_NAME );
                 string chat = Path.Combine ( currentStreamPath, CHAT_FILE_NAME );
@@ -437,6 +438,7 @@ namespace TwitchRewatcher {
                 LoadVideo ( video );
                 LoadChat ( chat );
                 LoadStreamConfig ( config );
+                Cursor.Current = Cursors.Arrow;
             }
         }
 

@@ -87,6 +87,7 @@ namespace TwitchRewatcher {
             if ( Emoticons != null ) {
                 string oldBody = Body;
                 int offset = 0;
+                // For some reason, twitch emotes sometimes have incorrect offsets? So we'll just revert the body's text if this happens.
                 try {
                     foreach ( TwitchEmoticon emote in Emoticons ) {
                         string image = string.Format ( TAG_EMOTE, emote.GetImage () );

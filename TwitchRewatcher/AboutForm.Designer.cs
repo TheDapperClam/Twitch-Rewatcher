@@ -55,10 +55,10 @@
             this.linkLabel2.LinkColor = System.Drawing.Color.Red;
             this.linkLabel2.Location = new System.Drawing.Point(27, 188);
             this.linkLabel2.Name = "linkLabel2";
-            this.linkLabel2.Size = new System.Drawing.Size(98, 22);
+            this.linkLabel2.Size = new System.Drawing.Size(56, 22);
             this.linkLabel2.TabIndex = 1;
             this.linkLabel2.TabStop = true;
-            this.linkLabel2.Text = "youtube-dl";
+            this.linkLabel2.Text = "yt-dlp";
             this.linkLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.linkLabel2.VisitedLinkColor = System.Drawing.Color.Red;
             this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);

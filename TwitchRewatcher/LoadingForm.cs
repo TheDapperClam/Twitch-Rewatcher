@@ -27,8 +27,8 @@ namespace TwitchRewatcher {
             LoadFinished ();
         }
 
-        private void OnYoutubeDLUpdated () {
-            Debug.WriteLine ( "Updated Youtube-dl" );
+        private void OnVideoDlUpdated () {
+            Debug.WriteLine ( "Updated video-dl" );
             LoadFinished ();
         }
 
@@ -37,7 +37,7 @@ namespace TwitchRewatcher {
         }
 
         private void LoadingForm_Load ( object sender, EventArgs e ) {
-            VodDownloader.OnYoutubeDLUpdated += OnYoutubeDLUpdated;
+            VodDownloader.OnVideoDlUpdated += OnVideoDlUpdated;
             TwitchBadgeLoader.OnGlobalBadgesLoaded += OnTwitchBadgesLoaded;
             BTTVEmoticonLoader.OnOfficialEmoticonsLoaded += OnBTTVEmoticonsLoaded;
         }
@@ -47,7 +47,7 @@ namespace TwitchRewatcher {
         }
 
         private void LoadingForm_Shown ( object sender, EventArgs e ) {
-            VodDownloader.UpdateYoutubeDL ();
+            VodDownloader.UpdateVideoDl ();
             TwitchBadgeLoader.LoadGlobalBadges ();
             BTTVEmoticonLoader.LoadOfficialEmoticons ();
         }

@@ -14,7 +14,7 @@ namespace TwitchRewatcher
         }
 
         private void linkLabel2_LinkClicked ( object sender, LinkLabelLinkClickedEventArgs e ) {
-            Process.Start ( "https://ytdl-org.github.io/youtube-dl/index.html" );
+            Process.Start ( "https://github.com/yt-dlp/yt-dlp" );
         }
 
         private void linkLabel3_LinkClicked ( object sender, LinkLabelLinkClickedEventArgs e ) {

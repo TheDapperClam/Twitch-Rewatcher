@@ -6,24 +6,24 @@ using System.Text.RegularExpressions;
 namespace TwitchRewatcher {
     public static class VodDownloader
     {
-        private const string YOUTUBE_DL_PATH = "Tools\\Youtube-DL\\youtube-dl.exe";
+        private const string VIDEO_DL_PATH = "Tools\\Video-DL\\yt-dlp.exe";
         private const string RECHAT_TOOL_PATH = "Tools\\RechatTool\\RechatTool.exe";
         private static readonly string ILLEGAL_PATH_CHARS = new string ( Path.GetInvalidFileNameChars () ) + new string ( Path.GetInvalidPathChars () );
 
         public static float VideoDownloadProgress { get; private set; }
         public static float ChatDownloadProgress { get; private set; }
         public static bool IsDownloading { get { return IsDownloadingVideo || IsDownloadingChat; } }
-        public static bool IsDownloadingVideo { get { return youtubeDlProcess != null; } }
+        public static bool IsDownloadingVideo { get { return videoDlProcess != null; } }
         public static bool IsDownloadingChat { get { return reChatToolProcess != null; } }
 
-        private static Process youtubeDlProcess = null;
-        private static Process youtubeDlUpdateProcess = null;
+        private static Process videoDlProcess = null;
+        private static Process videoDlUpdateProcess = null;
         private static Process reChatToolProcess = null;
 
         public delegate void VodEventHandler ();
         public static event VodEventHandler OnDownloadFinished;
         public static event VodEventHandler OnDownloadProgress;
-        public static event VodEventHandler OnYoutubeDLUpdated;
+        public static event VodEventHandler OnVideoDlUpdated;
 
         private static void ChatDataRecieved ( object sender, DataReceivedEventArgs e ) {
             OnDownloadProgress?.Invoke ();
@@ -54,28 +54,28 @@ namespace TwitchRewatcher {
             ChatDownloadProgress = 0.0f;
             Directory.CreateDirectory ( baseDirectory );
 
-            ProcessStartInfo youtubeDlInfo = new ProcessStartInfo ( Path.Combine ( Environment.CurrentDirectory, YOUTUBE_DL_PATH ) );
+            ProcessStartInfo videoDlInfo = new ProcessStartInfo ( Path.Combine ( Environment.CurrentDirectory, VIDEO_DL_PATH ) );
             ProcessStartInfo rechatToolInfo = new ProcessStartInfo ( Path.Combine ( Environment.CurrentDirectory, RECHAT_TOOL_PATH ) );
-            youtubeDlInfo.UseShellExecute = false;
+            videoDlInfo.UseShellExecute = false;
             rechatToolInfo.UseShellExecute = false;
-            youtubeDlInfo.RedirectStandardOutput = true;
+            videoDlInfo.RedirectStandardOutput = true;
             rechatToolInfo.RedirectStandardOutput = true;
-            youtubeDlInfo.CreateNoWindow = true;
+            videoDlInfo.CreateNoWindow = true;
             rechatToolInfo.CreateNoWindow = true;
             rechatToolInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            youtubeDlInfo.Arguments = string.Format ( "--newline -o \"{0}\\video.%(ext)s\" \"{1}\"", baseDirectory, source );
+            videoDlInfo.Arguments = string.Format ( "--newline -o \"{0}\\video.%(ext)s\" \"{1}\"", baseDirectory, source );
             rechatToolInfo.Arguments = string.Format ( "-d {0} \"{1}\"", id, baseDirectory + "/chat.dtc" );
 
-            youtubeDlProcess = Process.Start ( youtubeDlInfo );
+            videoDlProcess = Process.Start ( videoDlInfo );
             reChatToolProcess = Process.Start ( rechatToolInfo );
-            youtubeDlProcess.EnableRaisingEvents = true;
+            videoDlProcess.EnableRaisingEvents = true;
             reChatToolProcess.EnableRaisingEvents = true;
-            youtubeDlProcess.BeginOutputReadLine ();
+            videoDlProcess.BeginOutputReadLine ();
             reChatToolProcess.BeginOutputReadLine ();
 
-            youtubeDlProcess.Exited += new EventHandler ( VideoExit );
+            videoDlProcess.Exited += new EventHandler ( VideoExit );
             reChatToolProcess.Exited += new EventHandler ( ChatExit );
-            youtubeDlProcess.OutputDataReceived += new DataReceivedEventHandler ( VideoDataRecieved );
+            videoDlProcess.OutputDataReceived += new DataReceivedEventHandler ( VideoDataRecieved );
             reChatToolProcess.OutputDataReceived += new DataReceivedEventHandler ( ChatDataRecieved );
         }
 
@@ -97,8 +97,8 @@ namespace TwitchRewatcher {
         public static void KillDownloads () {
             bool downloadFinished = !IsDownloadingChat && !IsDownloadingVideo;
 
-            if ( IsDownloadingVideo && !youtubeDlProcess.HasExited )
-                youtubeDlProcess.Kill ();
+            if ( IsDownloadingVideo && !videoDlProcess.HasExited )
+                videoDlProcess.Kill ();
 
             if ( IsDownloadingChat && !reChatToolProcess.HasExited )
                 reChatToolProcess.Kill ();
@@ -109,14 +109,14 @@ namespace TwitchRewatcher {
             return total;
         }
 
-        public static void UpdateYoutubeDL () {
-            ProcessStartInfo youtubeDlUpdateInfo = new ProcessStartInfo ( Path.Combine ( Environment.CurrentDirectory, YOUTUBE_DL_PATH ) );
-            youtubeDlUpdateInfo.UseShellExecute = false;
-            youtubeDlUpdateInfo.CreateNoWindow = true;
-            youtubeDlUpdateInfo.Arguments = "-U";
-            youtubeDlUpdateProcess = Process.Start ( youtubeDlUpdateInfo );
-            youtubeDlUpdateProcess.EnableRaisingEvents = true;
-            youtubeDlUpdateProcess.Exited += new EventHandler ( YoutubeDLUpdateFinished );
+        public static void UpdateVideoDl () {
+            ProcessStartInfo videoDlUpdateInfo = new ProcessStartInfo ( Path.Combine ( Environment.CurrentDirectory, VIDEO_DL_PATH ) );
+            videoDlUpdateInfo.UseShellExecute = false;
+            videoDlUpdateInfo.CreateNoWindow = true;
+            videoDlUpdateInfo.Arguments = "-U";
+            videoDlUpdateProcess = Process.Start ( videoDlUpdateInfo );
+            videoDlUpdateProcess.EnableRaisingEvents = true;
+            videoDlUpdateProcess.Exited += new EventHandler ( VideoDlUpdateFinished );
         }
 
         private static void VideoDataRecieved ( object sender, DataReceivedEventArgs e ) {
@@ -132,16 +132,16 @@ namespace TwitchRewatcher {
         }
 
         private static void VideoExit ( object sender, EventArgs e ) {
-            youtubeDlProcess.Dispose ();
-            youtubeDlProcess = null;
+            videoDlProcess.Dispose ();
+            videoDlProcess = null;
             CheckDownloadFinished ();
             OnDownloadProgress?.Invoke ();
         }
 
-        private static void YoutubeDLUpdateFinished ( object sender, EventArgs e ) {
-            youtubeDlUpdateProcess.Dispose ();
-            youtubeDlUpdateProcess = null;
-            OnYoutubeDLUpdated?.Invoke ();
+        private static void VideoDlUpdateFinished ( object sender, EventArgs e ) {
+            videoDlUpdateProcess.Dispose ();
+            videoDlUpdateProcess = null;
+            OnVideoDlUpdated?.Invoke ();
         }
     }
 }
